@@ -8,6 +8,8 @@ import { database } from './config/db.js';
 import type { Server } from 'node:http';
 import healthCheck from './routes/health-route.js';
 import { setRateLimit } from './utils/rate-limit.js';
+import { errorHandler } from './middleware/error-handler.js';
+import { notFoundHandler } from './middleware/notFound-handler.js';
 
 const app = express();
 
@@ -21,6 +23,9 @@ app.use(morgan(env.NODE_ENV === "production" ? "combined" : "dev"));
 
 app.use('/api', setRateLimit)
 app.get("/health", healthCheck)
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 let server: Server | undefined;
 (async () => {

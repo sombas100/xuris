@@ -1,7 +1,7 @@
 import type { RequestHandler } from "express";
 
 
-const healthCheck: RequestHandler = (req, res) => {
+const healthCheck: RequestHandler = (_req, res) => {
     res.status(200).json({
         success: true,
         uptime: process.uptime(),
