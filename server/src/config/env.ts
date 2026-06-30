@@ -13,6 +13,8 @@ function requiredEnv(name: string) {
 
 export const env = {
     NODE_ENV: process.env.NODE_ENV,
-    PORT: process.env.PORT,
-
+    PORT: requiredEnv("PORT"),
+    DATABASE_URL: requiredEnv("DATABASE_URL"),
+    CLIENT_URL: requiredEnv("CLIENT_URL"),
+    
 }

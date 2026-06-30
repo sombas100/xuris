@@ -11,3 +11,273 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum Plan {
+  FREE
+  PRO
+  TEAM
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  CANCELLED
+  PAST_DUE
+  TRIALING
+}
+
+enum ResumeStatus {
+  UPLOADED
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum AnalysisType {
+  RESUME_REVIEW
+  JOB_MATCH
+  COVER_LETTER
+  INTERVIEW_PREP
+  SALARY_INSIGHT
+}
+
+enum AnalysisStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum ApplicationStatus {
+  SAVED
+  APPLIED
+  INTERVIEW
+  TECHNICAL_TEST
+  OFFER
+  REJECTED
+  WITHDRAWN
+}
+
+model User {
+  id        String  @id @default(cuid())
+  clerkId   String  @unique @map("clerk_id")
+  email     String  @unique
+  firstName String? @map("first_name")
+  lastName  String? @map("last_name")
+  imageUrl  String? @map("image_url")
+
+  plan              Plan      @default(FREE)
+  monthlyUsageLimit Int       @default(5) @map("monthly_usage_limit")
+  monthlyUsageCount Int       @default(0) @map("monthly_usage_count")
+  usageResetDate    DateTime? @map("usage_reset_date")
+
+  resumes        Resume[]
+  jobPosts       JobPost[]
+  analyses       AIAnalysis[]
+  coverLetters   CoverLetter[]
+  interviewPreps InterviewPrep[]
+  applications   JobApplication[]
+  subscriptions  Subscription[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Resume {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title        String
+  originalName String  @map("original_name")
+  fileUrl      String? @map("file_url")
+  fileKey      String? @map("file_key")
+  mimeType     String? @map("mime_type")
+  fileSize     Int?    @map("file_size")
+
+  extractedText String?      @map("extracted_text")
+  status        ResumeStatus @default(UPLOADED)
+
+  analyses       AIAnalysis[]
+  interviewPreps InterviewPrep[]
+  applications   JobApplication[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@map("resumes")
+}
+
+model JobPost {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title       String
+  company     String?
+  location    String?
+  salary      String?
+  description String
+  jobUrl      String? @map("job_url")
+
+  analyses       AIAnalysis[]
+  coverLetters   CoverLetter[]
+  interviewPreps InterviewPrep[]
+  applications   JobApplication[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@map("job_posts")
+}
+
+model AIAnalysis {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  resumeId String? @map("resume_id")
+  resume   Resume? @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+
+  jobPostId String?  @map("job_post_id")
+  jobPost   JobPost? @relation(fields: [jobPostId], references: [id], onDelete: SetNull)
+
+  type   AnalysisType
+  status AnalysisStatus @default(PENDING)
+
+  score       Int?
+  summary     String?
+  result      Json?
+  errorReason String? @map("error_reason")
+
+  modelUsed    String? @map("model_used")
+  promptTokens Int?    @map("prompt_tokens")
+  outputTokens Int?    @map("output_tokens")
+  totalTokens  Int?    @map("total_tokens")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([resumeId])
+  @@index([jobPostId])
+  @@map("ai_analysis")
+}
+
+model CoverLetter {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  jobPostId String?  @map("job_post_id")
+  jobPost   JobPost? @relation(fields: [jobPostId], references: [id], onDelete: SetNull)
+
+  title   String
+  content String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([jobPostId])
+  @@map("cover_letters")
+}
+
+model InterviewPrep {
+  id String @id @default(cuid())
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  resumeId String? @map("resume_id")
+  resume   Resume? @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+
+  jobPostId String?  @map("job_post_id")
+  jobPost   JobPost? @relation(fields: [jobPostId], references: [id], onDelete: SetNull)
+
+  questions Json
+  tips      Json?
+  summary   String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([resumeId])
+  @@index([jobPostId])
+  @@map("interview_prep")
+}
+
+model JobApplication {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  resumeId String? @map("resume_id")
+  resume   Resume? @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+
+  jobPostId String?  @map("job_post_id")
+  jobPost   JobPost? @relation(fields: [jobPostId], references: [id], onDelete: SetNull)
+
+  company  String
+  role     String
+  jobUrl   String?
+  location String?
+  salary   String?
+  notes    String?
+
+  status ApplicationStatus @default(SAVED)
+
+  appliedAt    DateTime? @map("applied_at")
+  interviewAt  DateTime? @map("interview_at")
+  followUpDate DateTime? @map("follow_up_date")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([status])
+  @@map("job_applications")
+}
+
+model Subscription {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  stripeCustomerId     String? @map("stripe_customer_id")
+  stripeSubscriptionId String? @unique @map("stripe_subscription_id")
+  stripePriceId        String? @map("stripe_price_id")
+
+  plan   Plan
+  status SubscriptionStatus @default(INACTIVE)
+
+  currentPeriodStart DateTime? @map("current_period_start")
+  currentPeriodEnd   DateTime? @map("current_period_end")
+  cancelAtPeriodEnd  Boolean   @default(false) @map("cancel_at_period_end")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+}
+
+model UsageEvent {
+  id     String @id @default(cuid())
+  userId String @map("user_id")
+
+  type AnalysisType
+
+  tokensUsed Int? @map("tokens_used")
+  costCents  Int? @map("cost_cents")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("usage_events")
+}
