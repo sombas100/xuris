@@ -16,5 +16,5 @@ export const env = {
     PORT: requiredEnv("PORT"),
     DATABASE_URL: requiredEnv("DATABASE_URL"),
     CLIENT_URL: requiredEnv("CLIENT_URL"),
-    
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 }
