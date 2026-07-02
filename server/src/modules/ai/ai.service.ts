@@ -1,5 +1,5 @@
-import { openai } from "../../../lib/openai";
-import { buildResumeAnalysisPrompt } from "./resume.prompt";
+import { openai } from "../../lib/openai";
+import { buildResumeAnalysisPrompt } from "./prompts/resume.prompt";
 
 const analyzeResume= async(resumeText: string) => {
     const prompt = buildResumeAnalysisPrompt({ resumeText });
