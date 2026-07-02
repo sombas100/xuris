@@ -16,5 +16,9 @@ export const env = {
     PORT: requiredEnv("PORT"),
     DATABASE_URL: requiredEnv("DATABASE_URL"),
     CLIENT_URL: requiredEnv("CLIENT_URL"),
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    OPENAI_API_KEY: requiredEnv('OPENAI_API_KEY'),
+    AWS_REGION: requiredEnv('AWS_REGION'),
+    AWS_ACCESS_KEY_ID: requiredEnv('AWS_ACCESS_KEY_ID'),
+    AWS_SECRET_ACCESS_KEY: requiredEnv('AWS_SECRET_ACCESS_KEY'),
+    AWS_S3_BUCKET_NAME: requiredEnv('AWS_S3_BUCKET_NAME'),
 }

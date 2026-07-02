@@ -12,6 +12,7 @@ import { errorHandler } from './middleware/error-handler.js';
 import { notFoundHandler } from './middleware/notFound-handler.js';
 
 const app = express();
+const db = database();
 
 app.set('trust proxy', 1);
 app.use(helmet());
@@ -30,14 +31,14 @@ app.use(errorHandler);
 let server: Server | undefined;
 (async () => {
     try {
-        await database().connect();
+        await db.connect();
         console.log("Connecting to the server...")
         server = app.listen(env.PORT, () => {
             console.log(`Server running on http://localhost:${env.PORT}`)
         })
     } catch (error: unknown) {
         console.log(`There was an error connecting to the server: ${error}`)
-        await database().disconnect();
+        await db.disconnect();
     }
 })();
 
