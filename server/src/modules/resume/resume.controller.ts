@@ -12,7 +12,7 @@ export const resumeController = () => {
     }
 
     
-    const userId = "TEMP_USER_ID";
+    const userId = "4vtstgervxdgvtxdfg";
 
     const result = await resumeService.uploadResume(req.file, userId);
 

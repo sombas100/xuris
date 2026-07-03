@@ -10,6 +10,7 @@ import healthCheck from './routes/health-route.js';
 import { setRateLimit } from './utils/rate-limit.js';
 import { errorHandler } from './middleware/error-handler.js';
 import { notFoundHandler } from './middleware/notFound-handler.js';
+import resumeRoutes from './modules/resume/resume.route.js'
 
 const app = express();
 const db = database();
@@ -23,6 +24,7 @@ app.use(compression());
 app.use(morgan(env.NODE_ENV === "production" ? "combined" : "dev"));
 
 app.use('/api', setRateLimit)
+app.use('/api/resumes', resumeRoutes);
 app.get("/health", healthCheck)
 
 app.use(notFoundHandler);

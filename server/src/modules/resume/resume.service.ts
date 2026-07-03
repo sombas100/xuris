@@ -7,7 +7,14 @@ const storage = s3Service();
 
 export const resumeService = () => {
   async function uploadResume(file: Express.Multer.File, userId: string) {
-    const uploadedFile = await storage.uploadResumeToS3({
+    
+  let uploadedFile: {
+    fileKey: string;
+    fileUrl: string;
+  } | null = null;
+
+  try {
+    uploadedFile = await storage.uploadResumeToS3({
       buffer: file.buffer,
       originalName: file.originalname,
       mimeType: file.mimetype,
@@ -25,7 +32,14 @@ export const resumeService = () => {
     });
 
     return resume;
+  } catch (error) {
+    if (uploadedFile?.fileKey) {
+      await storage.deleteResumeFromS3(uploadedFile.fileKey);
+    }
+
+    throw error;
   }
+}
 
   async function getResume(id: string) {
     const resume = await repository.retrieveResume(id);

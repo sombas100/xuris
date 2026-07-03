@@ -5,7 +5,7 @@ import { resumeController } from "./resume.controller";
 const controller = resumeController()
 const router = express.Router();
 
-router.post('/resumes/upload', upload.single('resume'), controller.uploadResume)
-router.post('resumes',)
+router.post('/v1/upload', upload.single('resume'), controller.uploadResume)
+
 
 export default router;
