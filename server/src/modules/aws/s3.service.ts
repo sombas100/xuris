@@ -17,7 +17,7 @@ type UploadFileParams = {
 }
 
 export const s3Service = () => {
-    async function uploadResumetoS3({ buffer, originalName, mimeType }: UploadFileParams) {
+    async function uploadResumeToS3({ buffer, originalName, mimeType }: UploadFileParams) {
         const fileKey = `resumes/${crypto.randomUUID()}-${originalName}`;
 
         const command = new PutObjectCommand({
@@ -31,12 +31,12 @@ export const s3Service = () => {
 
         return { 
             fileKey, 
-            fileUrl: `https://${bucketName}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileKey}`,
+            fileUrl: `https://${bucketName}.s3.${env.AWS_REGION}.amazonaws.com/${fileKey}`,
         };
     }
 
     async function deleteResumeFromS3(fileKey: string) {
-        const command = await new DeleteObjectCommand({
+        const command = new DeleteObjectCommand({
             Bucket: bucketName,
             Key: fileKey,
         })
@@ -45,7 +45,7 @@ export const s3Service = () => {
     }
 
     async function getResumeDownloadUrl(fileKey: string) {
-        const command = await new GetObjectCommand({
+        const command = new GetObjectCommand({
             Bucket: bucketName,
             Key: fileKey,
         })
@@ -55,5 +55,5 @@ export const s3Service = () => {
         })
     }
 
-    return { uploadResumetoS3, deleteResumeFromS3, getResumeDownloadUrl }
+    return { uploadResumeToS3, deleteResumeFromS3, getResumeDownloadUrl }
 }
