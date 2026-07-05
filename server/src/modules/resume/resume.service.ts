@@ -59,8 +59,13 @@ export const resumeService = () => {
     };
   }
 
+  async function getAllResumes(userId: string) {
+    return repository.retreiveAllResumes(userId); 
+  }
+
   return {
     uploadResume,
+    getAllResumes,
     getResume,
   };
 };

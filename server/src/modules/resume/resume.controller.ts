@@ -15,9 +15,17 @@ export const resumeController = () => {
     const userId = "4vtstgervxdgvtxdfg";
 
     const result = await resumeService.uploadResume(req.file, userId);
-
+    
     return successResponse(res, result, 201);
   });
+
+  const getCurrentUserResumes = asyncHandler(async (req, res) => {
+    const userId = "4vtstgervxdgvtxdfg";
+
+    const results = await resumeService.getAllResumes(userId);
+
+    return successResponse(res, results, 200);
+  })
 
   const getResumeById = asyncHandler(async (req, res) => {
     const { id } = req.params;
@@ -31,5 +39,6 @@ export const resumeController = () => {
   return {
     uploadResume,
     getResumeById,
+    getCurrentUserResumes,
   };
 };

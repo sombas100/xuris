@@ -38,6 +38,29 @@ export const resumeRepository = () => {
         
     }  
 
+    async function retreiveAllResumes(userId: string) {
+        return prisma.resume.findMany({
+            where: { userId },
+            select: {
+                id: true,
+                title: true,
+                originalName: true,
+                fileUrl: true,
+                fileKey: true,
+                mimeType: true,
+                fileSize: true,
+                extractedText: true,
+                status: true,
+                createdAt: true,
+                updatedAt: true,
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+            
+        })
+    }
+
     async function createResume(data: CreateResumeData) {
         return prisma.resume.create({
             data,
@@ -56,5 +79,5 @@ export const resumeRepository = () => {
         })
     }
 
-    return { retrieveResume, createResume }
+    return { retrieveResume, retreiveAllResumes, createResume }
 }
