@@ -36,9 +36,19 @@ export const resumeController = () => {
     return successResponse(res, result, 200);
   });
 
+  const deleteResume = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const resumeId = String(id);
+
+    const result = await resumeService.deleteResume(resumeId);
+
+    return successResponse(res, result, 204);
+  })
+
   return {
     uploadResume,
     getResumeById,
     getCurrentUserResumes,
+    deleteResume,
   };
 };

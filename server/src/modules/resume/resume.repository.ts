@@ -79,5 +79,11 @@ export const resumeRepository = () => {
         })
     }
 
-    return { retrieveResume, retreiveAllResumes, createResume }
+    async function deleteResume(id: string) {
+        return prisma.resume.delete({
+            where: { id }
+        })
+    }
+
+    return { retrieveResume, retreiveAllResumes, createResume, deleteResume }
 }

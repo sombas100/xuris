@@ -63,9 +63,25 @@ export const resumeService = () => {
     return repository.retreiveAllResumes(userId); 
   }
 
+  async function deleteResume(id: string) {
+    const resume = await repository.retrieveResume(id);
+
+    if (!resume)
+      throw new HttpError("Resume not found", 404, "RESUME_NOT_FOUND");
+
+    if (!resume.fileKey)
+      throw new HttpError("Resume file key not found", 404, "FILE_KEY_NOT_FOUND")
+
+    await storage.deleteResumeFromS3(resume.fileKey);
+    const deletedResume = repository.deleteResume(id);
+
+    return deletedResume;
+  }
+
   return {
     uploadResume,
     getAllResumes,
     getResume,
+    deleteResume,
   };
 };
