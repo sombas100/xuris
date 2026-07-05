@@ -1,4 +1,6 @@
 import { prisma } from "../../lib/prisma";
+import { ResumeStatus } from "../../../generated/prisma/enums";
+
 
 type CreateResumeData = {
   userId: string;
@@ -6,9 +8,10 @@ type CreateResumeData = {
   originalName: string;
   fileUrl: string;
   fileKey: string;
+  extractedText: string;
   mimeType: string;
   fileSize: number;
-  status: "UPLOADED";
+  status: ResumeStatus;
 };
 
 export const resumeRepository = () => {
@@ -38,7 +41,7 @@ export const resumeRepository = () => {
         
     }  
 
-    async function retreiveAllResumes(userId: string) {
+    async function retrieveAllResumes(userId: string) {
         return prisma.resume.findMany({
             where: { userId },
             select: {
@@ -73,6 +76,7 @@ export const resumeRepository = () => {
                 fileSize: true,
                 mimeType: true,
                 status: true,
+                extractedText: true,
                 createdAt: true,
                 updatedAt: true,
             }
@@ -85,5 +89,5 @@ export const resumeRepository = () => {
         })
     }
 
-    return { retrieveResume, retreiveAllResumes, createResume, deleteResume }
+    return { retrieveResume, retrieveAllResumes, createResume, deleteResume }
 }

@@ -1,9 +1,11 @@
 import { HttpError } from "../../errors/HttpError";
 import { s3Service } from "../aws/s3.service";
 import { resumeRepository } from "./resume.repository";
+import { extractResumeText } from "./resume-text.service";
 
 const repository = resumeRepository();
 const storage = s3Service();
+ 
 
 export const resumeService = () => {
   async function uploadResume(file: Express.Multer.File, userId: string) {
@@ -20,6 +22,8 @@ export const resumeService = () => {
       mimeType: file.mimetype,
     });
 
+    const extractedText = await extractResumeText(file);
+
     const resume = await repository.createResume({
       userId,
       title: file.originalname,
@@ -28,7 +32,8 @@ export const resumeService = () => {
       fileKey: uploadedFile.fileKey,
       mimeType: file.mimetype,
       fileSize: file.size,
-      status: "UPLOADED",
+      extractedText: extractedText,
+      status: "EXTRACTED",
     });
 
     return resume;
@@ -60,7 +65,7 @@ export const resumeService = () => {
   }
 
   async function getAllResumes(userId: string) {
-    return repository.retreiveAllResumes(userId); 
+    return repository.retrieveAllResumes(userId); 
   }
 
   async function deleteResume(id: string) {

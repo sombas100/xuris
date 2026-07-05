@@ -28,6 +28,7 @@ enum SubscriptionStatus {
 
 enum ResumeStatus {
   UPLOADED
+  EXTRACTED
   PROCESSING
   READY
   FAILED
