@@ -151,8 +151,24 @@ model AIAnalysis {
   type   AnalysisType
   status AnalysisStatus @default(PENDING)
 
-  score       Int?
-  summary     String?
+  overallScore Int? @map("overall_score")
+
+  atsCompatibilityScore Int? @map("ats_compatibility_score")
+  formattingScore       Int? @map("formatting_score")
+  clarityScore          Int? @map("clarity_score")
+  technicalSkillsScore  Int? @map("technical_skills_score")
+  experienceScore       Int? @map("experience_score")
+  projectsScore         Int? @map("projects_score")
+  educationScore        Int? @map("education_score")
+  grammarScore          Int? @map("grammar_score")
+
+  summary              String?
+  strengths            Json?
+  weaknesses           Json?
+  improvements         Json?
+  missingKeywords      Json?   @map("missing_keywords")
+  recommendedJobTitles Json?   @map("recommended_job_titles")
+
   result      Json?
   errorReason String? @map("error_reason")
 
@@ -167,6 +183,7 @@ model AIAnalysis {
   @@index([userId])
   @@index([resumeId])
   @@index([jobPostId])
+  @@index([overallScore])
   @@map("ai_analysis")
 }
 

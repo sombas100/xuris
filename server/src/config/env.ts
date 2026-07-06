@@ -21,4 +21,5 @@ export const env = {
     AWS_ACCESS_KEY_ID: requiredEnv('AWS_ACCESS_KEY_ID'),
     AWS_SECRET_ACCESS_KEY: requiredEnv('AWS_SECRET_ACCESS_KEY'),
     AWS_S3_BUCKET_NAME: requiredEnv('AWS_S3_BUCKET_NAME'),
+    OPENAI_MODEL: requiredEnv('OPENAI_MODEL'),
 }

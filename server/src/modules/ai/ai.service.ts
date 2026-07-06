@@ -1,11 +1,12 @@
 import { openai } from "../../lib/openai";
-import { buildResumeAnalysisPrompt } from "./prompts/resume.prompt";
+import { buildResumeAnalysisPrompt } from "./prompts/resume-analysis.prompt";
+import { env } from "../../config/env";
 
 const analyzeResume= async(resumeText: string) => {
     const prompt = buildResumeAnalysisPrompt({ resumeText });
 
     const response = await openai.responses.create({
-        model: 'gpt-5.4-mini',
+        model: env.OPENAI_MODEL,
         input: prompt,
     })
 
