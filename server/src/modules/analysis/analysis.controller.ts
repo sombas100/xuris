@@ -16,5 +16,21 @@ export const analysisController = () => {
         return successResponse(res, result, 201)
     })
 
-    return { analyseResume }
+    const getAnalysisById = asyncHandler(async (req, res) => {
+        const analysisId = String(req.params.analysisId);
+
+        const  result = await analysisService.getAnalysisById(analysisId);
+
+        return successResponse(res, result, 200)
+    })
+
+    const getResumeAnalyses = asyncHandler(async (req, res) => {
+        const resumeId = String(req.params.resumeId);
+
+        const result = await analysisService.getResumeAnalyses(resumeId);
+
+        return successResponse(res, result, 200);
+    })
+
+    return { analyseResume, getAnalysisById, getResumeAnalyses }
 }

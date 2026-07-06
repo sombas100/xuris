@@ -46,5 +46,20 @@ export const analysisRepository = () => {
         })
     }
 
-    return { createResumeAnalysis }
+    async function getAnalysisById(id: string) {
+        return prisma.aIAnalysis.findUnique({
+            where: { id }
+        })
+    }
+
+    async function getResumeAnalyses(resumeId: string) {
+        return prisma.aIAnalysis.findMany({
+            where: { resumeId },
+            orderBy: {
+                createdAt: 'desc'
+            },
+        })
+    }
+
+    return { createResumeAnalysis, getAnalysisById, getResumeAnalyses, }
 }

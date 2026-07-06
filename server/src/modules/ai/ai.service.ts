@@ -1,16 +1,44 @@
 import { openai } from "../../lib/openai";
-import { buildResumeAnalysisPrompt } from "./prompts/resume-analysis.prompt";
 import { env } from "../../config/env";
+import { HttpError } from "../../errors/HttpError";
+import { buildResumeAnalysisPrompt } from "./prompts/resume-analysis.prompt";
+import type { ResumeAnalysisAIResponse, ResumeAnalysisResult } from "./ai.types";
 
-const analyzeResume= async(resumeText: string) => {
+export const aiService = () => {
+  async function analyzeResume(resumeText: string): Promise<ResumeAnalysisAIResponse> {
     const prompt = buildResumeAnalysisPrompt({ resumeText });
 
     const response = await openai.responses.create({
-        model: env.OPENAI_MODEL,
-        input: prompt,
-    })
+      model: env.OPENAI_MODEL,
+      input: prompt,
+    });
 
-    return response.output_text;
-}
+    const text = response.output_text;
 
-export const aiService = { analyzeResume };
+    if (!text) {
+      throw new HttpError("AI did not return a response", 500, "AI_EMPTY_RESPONSE");
+    }
+
+    let parsed: ResumeAnalysisResult;
+
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      throw new HttpError("AI returned invalid JSON", 500, "AI_INVALID_JSON");
+    }
+
+    return {
+      result: parsed,
+      usage: {
+        modelUsed: env.OPENAI_MODEL,
+        promptTokens: response.usage?.input_tokens,
+        outputTokens: response.usage?.output_tokens,
+        totalTokens: response.usage?.total_tokens,
+      },
+    };
+  }
+
+  return {
+    analyzeResume,
+  };
+};
