@@ -39,3 +39,28 @@ export type JobExtractionResult = {
   requirements: string[];
   responsibilities: string[];
 };
+
+export type ResumeJobMatchResult = {
+  matchScore: number;
+  summary: string;
+  matchingStrengths: string[];
+  missingRequirements: string[];
+  missingKeywords: string[];
+  recommendedResumeChanges: string[];
+  riskAreas: string[];
+  interviewFocusAreas: string[];
+};
+
+export type JobMatchParams = {
+    resumeText: string;
+    jobTitle: string;
+    company?: string | null;
+    jobDescription: string;
+    requirements?: unknown;
+    responsibilities?: unknown;
+  }
+
+  export type ResumeJobMatchAIResponse = {
+  result: ResumeJobMatchResult;
+  usage: AIUsage;
+};

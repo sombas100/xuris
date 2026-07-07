@@ -32,6 +32,12 @@ export const jobRepository = () => {
         })
     }
 
+    async function retrieveJobPost(id: string) {
+        return prisma.jobPost.findUnique({
+            where: { id }
+        })
+    }
 
-    return { createJob }
+
+    return { createJob, retrieveJobPost }
 }

@@ -11,9 +11,50 @@ type CreateResumeAnalysisData = {
   totalTokens?: number;
 };
 
-export const analysisRepository = () => {
-    async function createResumeAnalysis(data: CreateResumeAnalysisData) {
+type CreateResumeJobMatchProps = {
+  userId: string;
+  resumeId: string;
+  jobPostId: string;
+  result: {
+    matchScore: number;
+    summary: string;
+    matchingStrengths: string[];
+    missingRequirements: string[];
+    missingKeywords: string[];
+    recommendedResumeChanges: string[];
+    riskAreas: string[];
+    interviewFocusAreas: string[];
+  };
+  modelUsed?: string;
+  promptTokens?: number;
+  outputTokens?: number;
+  totalTokens?: number;
+}
 
+export const analysisRepository = () => {
+    async function createResumeJobMatchAnalysis(data: CreateResumeJobMatchProps) {
+        return prisma.aIAnalysis.create({
+            data: {
+                userId: data.userId,
+                resumeId: data.resumeId,
+                jobPostId: data.jobPostId,
+                type: 'JOB_MATCH',
+                status: 'COMPLETED',
+                overallScore: data.result.matchScore,
+                summary: data.result.summary,
+                strengths: data.result.matchingStrengths,
+                weaknesses: data.result.riskAreas,
+                improvements: data.result.recommendedResumeChanges,
+                missingKeywords: data.result.missingKeywords,
+                modelUsed: data.modelUsed,
+                promptTokens: data.promptTokens,
+                outputTokens: data.outputTokens,
+                totalTokens: data.totalTokens,
+            }
+        })
+    }
+
+    async function createResumeAnalysis(data: CreateResumeAnalysisData) {
         return prisma.aIAnalysis.create({
             data: {
                 userId: data.userId,
@@ -61,5 +102,10 @@ export const analysisRepository = () => {
         })
     }
 
-    return { createResumeAnalysis, getAnalysisById, getResumeAnalyses, }
+    return { 
+        createResumeAnalysis, 
+        getAnalysisById, 
+        getResumeAnalyses, 
+        createResumeJobMatchAnalysis
+    }
 }

@@ -5,6 +5,7 @@ const router = express.Router();
 const controller = analysisController();
 
 router.post('/resumes/:resumeId/analyse', controller.analyseResume);
+router.post('/job-match', controller.createJobMatchAnalysis)
 
 router.get('/resumes/:resumeId/analyses', controller.getResumeAnalyses);
 router.get('/:analysisId', controller.getAnalysisById);

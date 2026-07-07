@@ -1,10 +1,24 @@
 import { analysisService as createAnalysisService } from "./analysis.service";
 import { asyncHandler } from "../../middleware/async-handler";
 import { successResponse } from "../../utils/api-response";
+import { aiService } from "../ai/ai.service";
 
 const analysisService = createAnalysisService();
+const ai = aiService();
 
 export const analysisController = () => {
+    const createJobMatchAnalysis = asyncHandler(async (req, res) => {
+        const userId = "4vtstgervxdgvtxdfg";
+        const { resumeId, jobPostId } = req.body;
+        const result = await analysisService.createJobMatchAnalysis({
+            userId,
+            resumeId,
+            jobPostId,
+        })
+
+        return successResponse(res, result, 201);
+    })
+
     const analyseResume = asyncHandler(async (req, res) => {
         const resumeId = String(req.params.resumeId)
         
@@ -32,5 +46,5 @@ export const analysisController = () => {
         return successResponse(res, result, 200);
     })
 
-    return { analyseResume, getAnalysisById, getResumeAnalyses }
+    return { createJobMatchAnalysis, analyseResume, getAnalysisById, getResumeAnalyses }
 }
