@@ -2,6 +2,8 @@ import { openai } from "../../lib/openai";
 import { env } from "../../config/env";
 import { HttpError } from "../../errors/HttpError";
 import { buildResumeAnalysisPrompt } from "./prompts/resume-analysis.prompt";
+import { buildJobExtractionPrompt } from "./prompts/job-extraction.prompt";
+import type { JobExtractionResult } from "./ai.types";
 import type { ResumeAnalysisAIResponse, ResumeAnalysisResult } from "./ai.types";
 
 export const aiService = () => {
@@ -38,7 +40,29 @@ export const aiService = () => {
     };
   }
 
+  async function extractJobPostFromText(rawText: string): Promise<JobExtractionResult> {
+    const prompt = buildJobExtractionPrompt({ rawText })
+
+    const response = await openai.responses.create({
+        model: env.OPENAI_MODEL,
+        input: prompt,
+    })
+
+    const text = response.output_text;
+
+    if (!text) {
+    throw new HttpError("AI did not return a response", 500, "AI_EMPTY_RESPONSE");
+  }
+
+  try {
+    return JSON.parse(text) as JobExtractionResult;
+  } catch (error) {
+    throw new HttpError("AI returned invalid JSON", 500, "AI_INVALID_JSON");
+  }
+  }
+
   return {
     analyzeResume,
+    extractJobPostFromText,
   };
 };

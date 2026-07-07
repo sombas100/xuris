@@ -13,6 +13,14 @@ export const jobController = () => {
         return successResponse(res, createdJob, 201);
     })
 
+    const createJobPostFromText = asyncHandler(async (req, res) => {
+        const userId = "4vtstgervxdgvtxdfg";
 
-    return { createJobPost }
+        const extractedJob = await service.createJobPostFromText(req.body, userId);
+
+        return successResponse(res, extractedJob, 201)
+    })
+
+
+    return { createJobPost, createJobPostFromText }
 }

@@ -29,3 +29,13 @@ export type ResumeAnalysisAIResponse = {
   result: ResumeAnalysisResult;
   usage: AIUsage;
 };
+
+export type JobExtractionResult = {
+  title: string;
+  company: string | null;
+  location: string | null;
+  salary: string | null;
+  description: string;
+  requirements: string[];
+  responsibilities: string[];
+};

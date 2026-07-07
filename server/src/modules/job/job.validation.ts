@@ -11,4 +11,9 @@ export const createJobPostSchema = z.object({
     responsibilities: z.array(z.string()).optional(),
 })
 
+export const createJobPostFromTextSchema = z.object({
+  rawText: z.string().min(100, "Job advert must be at least 100 characters"),
+});
+
+export type CreateJobPostFromTextInput = z.infer<typeof createJobPostFromTextSchema>;
 export type CreateJobPostInput = z.infer<typeof createJobPostSchema>
