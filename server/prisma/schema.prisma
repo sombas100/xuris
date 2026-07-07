@@ -125,6 +125,9 @@ model JobPost {
   description String
   jobUrl      String? @map("job_url")
 
+  requirements     Json?
+  responsibilities Json?
+
   analyses       AIAnalysis[]
   coverLetters   CoverLetter[]
   interviewPreps InterviewPrep[]
