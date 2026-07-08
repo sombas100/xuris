@@ -13,5 +13,33 @@ export const coverLetterController = () => {
         return successResponse(res, result, 201);
     })
 
-    return { generateCoverLetter }
+    const getCoverLetterById = asyncHandler(async (req, res) => {
+        const id = String(req.params.id);
+        const result = await service.getCoverLetterById(id);
+
+        return successResponse(res, result, 200);
+    })
+
+    const getCoverLettersByResumeId = asyncHandler(async (req, res) => {
+        const resumeId = String(req.params.resumeId);
+        const result = await service.getCoverLettersByResumeId(resumeId);
+        
+        return successResponse(res, result, 200);
+    })
+
+    const getCoverLettersByJobPostId = asyncHandler(async (req, res) => {
+        const jobPostId = String(req.params.jobPostId);
+        const result = await service.getCoverLettersByJobPostId(jobPostId);
+        
+        return successResponse(res, result, 200);
+    })
+
+    
+
+    return { 
+        generateCoverLetter, 
+        getCoverLetterById,
+        getCoverLettersByResumeId,
+        getCoverLettersByJobPostId
+    }
 }

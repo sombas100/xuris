@@ -52,9 +52,30 @@ export const coverLetterService = () => {
             promptTokens: aiResponse.usage.promptTokens,
             outputTokens: aiResponse.usage.outputTokens,
             totalTokens: aiResponse.usage.totalTokens,
-        })
+        })   
 }
 
+    async function getCoverLetterById(id: string) {
+        const coverLetter = await repository.retrieveCoverLetterById(id);
 
-    return { createTailoredCoverLetter }
+        if (!coverLetter)
+            throw new NotFoundError('Cover letter not found', 'COVER_LETTER_NOT_FOUND');
+
+        return coverLetter;
+    }
+
+    async function getCoverLettersByResumeId(resumeId: string) {
+        return repository.retrieveCoverLettersByResumeId(resumeId);
+    }
+
+    async function getCoverLettersByJobPostId(jobPostId: string) {
+        return repository.retrieveCoverLettersByJobPostId(jobPostId);
+    }
+
+    return { 
+        createTailoredCoverLetter, 
+        getCoverLetterById, 
+        getCoverLettersByResumeId,
+        getCoverLettersByJobPostId,
+    }
   }

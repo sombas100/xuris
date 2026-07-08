@@ -36,5 +36,33 @@ export const coverLetterRepository = () => {
     }
 
 
-    return { createCoverLetter }
+    async function retrieveCoverLetterById(id: string) {
+        return prisma.coverLetter.findUnique({
+            where: { id }
+        })
+    }
+
+    async function retrieveCoverLettersByResumeId(resumeId: string) {
+        return prisma.coverLetter.findMany({
+            where: { resumeId },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        })
+    }
+
+    async function retrieveCoverLettersByJobPostId(jobPostId: string) {
+        return prisma.coverLetter.findMany({
+            where: { jobPostId },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        })
+    }
+    return { 
+        createCoverLetter, 
+        retrieveCoverLetterById, 
+        retrieveCoverLettersByResumeId,
+        retrieveCoverLettersByJobPostId,
+     }
 }
