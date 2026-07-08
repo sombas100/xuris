@@ -1,10 +1,8 @@
 import { analysisService as createAnalysisService } from "./analysis.service";
 import { asyncHandler } from "../../middleware/async-handler";
 import { successResponse } from "../../utils/api-response";
-import { aiService } from "../ai/ai.service";
 
 const analysisService = createAnalysisService();
-const ai = aiService();
 
 export const analysisController = () => {
     const createJobMatchAnalysis = asyncHandler(async (req, res) => {

@@ -2,6 +2,8 @@ import { HttpError } from "../../errors/HttpError";
 import { s3Service } from "../aws/s3.service";
 import { resumeRepository } from "./resume.repository";
 import { extractResumeText } from "./resume-text.service";
+import { NotFoundError } from "../../errors/NotFoundError";
+import { InternalServerError } from "../../errors/InternalServerError";
 
 const repository = resumeRepository();
 const storage = s3Service();
@@ -50,11 +52,11 @@ export const resumeService = () => {
     const resume = await repository.retrieveResume(id);
 
     if (!resume) {
-      throw new HttpError("Resume not found", 404, "RESUME_NOT_FOUND");
+      throw new NotFoundError("Resume not found", "RESUME_NOT_FOUND");
     }
 
     if(!resume.fileKey)
-      throw new HttpError('Resume file key is missing', 500, "RESUME_FILE_KEY_MISSING")
+      throw new InternalServerError('Resume file key is missing', "RESUME_FILE_KEY_MISSING")
 
     const downloadUrl = await storage.getResumeDownloadUrl(resume.fileKey);
 
@@ -72,10 +74,10 @@ export const resumeService = () => {
     const resume = await repository.retrieveResume(id);
 
     if (!resume)
-      throw new HttpError("Resume not found", 404, "RESUME_NOT_FOUND");
+      throw new NotFoundError("Resume not found", "RESUME_NOT_FOUND");
 
     if (!resume.fileKey)
-      throw new HttpError("Resume file key not found", 404, "FILE_KEY_NOT_FOUND")
+      throw new NotFoundError("Resume file key not found", "FILE_KEY_NOT_FOUND")
 
     await storage.deleteResumeFromS3(resume.fileKey);
     const deletedResume = repository.deleteResume(id);

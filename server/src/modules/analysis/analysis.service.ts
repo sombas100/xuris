@@ -1,8 +1,9 @@
 import { resumeRepository } from "../resume/resume.repository";
-import { HttpError } from "../../errors/HttpError";
 import { analysisRepository } from "./analysis.repository";
 import { jobRepository } from "../job/job.repository";
 import { aiService } from "../ai/ai.service";
+import { NotFoundError } from "../../errors/NotFoundError";
+import { BadRequestError } from "../../errors/BadRequestError";
 
 const resumeRepo = resumeRepository();
 const analysisRepo = analysisRepository();
@@ -14,13 +15,12 @@ export const analysisService = () => {
     const resume = await resumeRepo.retrieveResume(resumeId);
 
     if (!resume) {
-      throw new HttpError("Resume not found", 404, "RESUME_NOT_FOUND");
+      throw new NotFoundError("Resume not found", "RESUME_NOT_FOUND");
     }
 
     if (!resume.extractedText) {
-      throw new HttpError(
+      throw new BadRequestError(
         "Resume text has not been extracted yet",
-        400,
         "RESUME_TEXT_NOT_EXTRACTED"
       );
     }
@@ -52,13 +52,12 @@ export const analysisService = () => {
     const resume = await resumeRepo.retrieveResume(resumeId);
 
     if (!resume) {
-      throw new HttpError("Resume not found", 404, "RESUME_NOT_FOUND");
+      throw new NotFoundError("Resume not found", "RESUME_NOT_FOUND");
     }
 
     if (!resume.extractedText) {
-      throw new HttpError(
+      throw new BadRequestError(
         "Resume text has not been extracted yet",
-        400,
         "RESUME_TEXT_NOT_EXTRACTED"
       );
     }
@@ -66,7 +65,7 @@ export const analysisService = () => {
     const jobPost = await jobRepo.retrieveJobPost(jobPostId);
 
     if (!jobPost) {
-      throw new HttpError("Job post not found", 404, "JOB_POST_NOT_FOUND");
+      throw new NotFoundError("Job post not found", "JOB_POST_NOT_FOUND");
     }
 
     const aiResponse = await ai.matchResumeToJob({
@@ -94,7 +93,7 @@ export const analysisService = () => {
     const analysis = await analysisRepo.getAnalysisById(id);
 
     if (!analysis) {
-      throw new HttpError("Analysis not found", 404, "ANALYSIS_NOT_FOUND");
+      throw new NotFoundError("Analysis not found", "ANALYSIS_NOT_FOUND");
     }
 
     return analysis;
@@ -108,15 +107,14 @@ export const analysisService = () => {
     const analysis = await analysisRepo.getJobMatchAnalysisByJobId(jobPostId);
 
     if (!analysis)
-            throw new HttpError("Analysis not found", 404, "ANALYSIS_NOT_FOUND");
+            throw new NotFoundError("Analysis not found", "ANALYSIS_NOT_FOUND");
 
     return analysis;
   }
   async function getJobMatchAnalysisByResumeId(resumeId: string) {
     return analysisRepo.getJobMatchAnalysesByResumeId(resumeId);
-
-    
   }
+
 
   return {
     createJobMatchAnalysis,

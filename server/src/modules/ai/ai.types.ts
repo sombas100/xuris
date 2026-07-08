@@ -64,3 +64,24 @@ export type JobMatchParams = {
   result: ResumeJobMatchResult;
   usage: AIUsage;
 };
+
+export type CoverLetterResult = {
+  title: string;
+  content: string;
+  tone: string;
+  keyPoints: string[];
+}
+
+export type CoverLetterAIResponse = {
+  result: CoverLetterResult;
+  usage: AIUsage;
+}
+
+export type CoverLetterParams = {
+  resumeText: string;
+  jobTitle: string;
+  company?: string | null;
+  jobDescription: string;
+  requirements?: unknown;
+  responsibilities?: unknown;
+}

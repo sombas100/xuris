@@ -1,0 +1,60 @@
+import { BadRequestError } from "../../errors/BadRequestError";
+import { NotFoundError } from "../../errors/NotFoundError";
+import { aiService } from "../ai/ai.service";
+import { jobRepository } from "../job/job.repository";
+import { resumeRepository } from "../resume/resume.repository";
+import { coverLetterRepository } from "./cover-letter.repository";
+import { CreateCoverLetterInput } from "./cover-letter.validation";
+
+const ai = aiService();
+const resumeRepo = resumeRepository();
+const jobRepo = jobRepository();
+const repository = coverLetterRepository();
+
+
+export const coverLetterService = () => {
+    async function createTailoredCoverLetter(data: CreateCoverLetterInput, userId: string) {
+        const { resumeId, jobPostId } = data
+        const resume = await resumeRepo.retrieveResume(data.resumeId);
+    
+        if (!resume)
+          throw new NotFoundError("Resume not found", "RESUME_NOT_FOUND");
+    
+        if (!resume.extractedText) {
+          throw new BadRequestError(
+            "Resume text has not been extracted yet",
+            "RESUME_TEXT_NOT_EXTRACTED"
+          );
+        }
+    
+        const jobPost = await jobRepo.retrieveJobPost(data.jobPostId);
+    
+        if (!jobPost)
+          throw new NotFoundError("Job post not found", "JOB_POST_NOT_FOUND");
+    
+        const aiResponse = await ai.generateCoverLetter({
+            resumeText: resume.extractedText,
+            jobTitle: jobPost.title,
+            company: jobPost.company,
+            jobDescription: jobPost.description,
+            requirements: jobPost.requirements,
+            responsibilities: jobPost.responsibilities,
+        })
+    
+        return repository.createCoverLetter({
+            userId,
+            resumeId,
+            jobPostId,
+            title: aiResponse.result.title,
+            content: aiResponse.result.content,
+            tone: aiResponse.result.tone,
+            modelUsed: aiResponse.usage.modelUsed,
+            promptTokens: aiResponse.usage.promptTokens,
+            outputTokens: aiResponse.usage.outputTokens,
+            totalTokens: aiResponse.usage.totalTokens,
+        })
+}
+
+
+    return { createTailoredCoverLetter }
+  }
