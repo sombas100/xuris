@@ -46,5 +46,28 @@ export const analysisController = () => {
         return successResponse(res, result, 200);
     })
 
-    return { createJobMatchAnalysis, analyseResume, getAnalysisById, getResumeAnalyses }
+    const getJobMatchAnalysisByJobPostId = asyncHandler(async (req, res) => {
+        const jobPostId = String(req.params.jobPostId);
+
+        const result = await analysisService.getJobMatchAnalysisByJobId(jobPostId);
+
+        return successResponse(res, result, 200);
+    })
+
+    const getJobMatchAnalysisByResumeId = asyncHandler(async (req, res) => {
+        const resumeId = String(req.params.resumeId);
+
+        const result = await analysisService.getJobMatchAnalysisByResumeId(resumeId);
+
+        return successResponse(res, result, 200);
+    })
+
+    return { 
+        createJobMatchAnalysis, 
+        analyseResume, 
+        getAnalysisById, 
+        getResumeAnalyses,
+        getJobMatchAnalysisByJobPostId,
+        getJobMatchAnalysisByResumeId,
+    }
 }

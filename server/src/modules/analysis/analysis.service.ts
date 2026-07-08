@@ -3,7 +3,6 @@ import { HttpError } from "../../errors/HttpError";
 import { analysisRepository } from "./analysis.repository";
 import { jobRepository } from "../job/job.repository";
 import { aiService } from "../ai/ai.service";
-import { env } from "../../config/env";
 
 const resumeRepo = resumeRepository();
 const analysisRepo = analysisRepository();
@@ -105,10 +104,26 @@ export const analysisService = () => {
     return analysisRepo.getResumeAnalyses(resumeId);
   }
 
+  async function getJobMatchAnalysisByJobId(jobPostId: string) {
+    const analysis = await analysisRepo.getJobMatchAnalysisByJobId(jobPostId);
+
+    if (!analysis)
+            throw new HttpError("Analysis not found", 404, "ANALYSIS_NOT_FOUND");
+
+    return analysis;
+  }
+  async function getJobMatchAnalysisByResumeId(resumeId: string) {
+    return analysisRepo.getJobMatchAnalysesByResumeId(resumeId);
+
+    
+  }
+
   return {
     createJobMatchAnalysis,
     analyseResume,
     getAnalysisById,
     getResumeAnalyses,
+    getJobMatchAnalysisByJobId,
+    getJobMatchAnalysisByResumeId,
   };
 };

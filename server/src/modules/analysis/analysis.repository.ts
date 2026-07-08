@@ -102,10 +102,27 @@ export const analysisRepository = () => {
         })
     }
 
+    async function getJobMatchAnalysisByJobId(jobPostId: string) {
+        return prisma.aIAnalysis.findUnique({
+            where: { id: jobPostId }
+        })
+    }
+
+    async function getJobMatchAnalysesByResumeId(resumeId: string) {
+        return prisma.aIAnalysis.findMany({
+            where: { resumeId, type: 'JOB_MATCH' },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        })
+    }
+
     return { 
         createResumeAnalysis, 
         getAnalysisById, 
         getResumeAnalyses, 
-        createResumeJobMatchAnalysis
+        createResumeJobMatchAnalysis,
+        getJobMatchAnalysisByJobId,
+        getJobMatchAnalysesByResumeId,
     }
 }
