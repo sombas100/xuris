@@ -14,6 +14,10 @@ import type { ResumeJobMatchAIResponse } from "./ai.types";
 import { InternalServerError } from "../../errors/InternalServerError";
 import { buildCoverLetterPrompt } from "./prompts/cover-letter.prompt";
 
+import { buildInterviewPrepPrompt } from "./prompts/interview-prep.prompt";
+import type { InterviewPrepAIResponse, InterviewPrepResult, GenerateInterviewPrepParams } from "./ai.types";
+import { ps } from "zod/v4/locales";
+
 export const aiService = () => {
   async function analyzeResume(resumeText: string): Promise<ResumeAnalysisAIResponse> {
     const prompt = buildResumeAnalysisPrompt({ resumeText });
@@ -136,10 +140,43 @@ export const aiService = () => {
     }
   }
 
+  async function generateInterviewPrep(params: GenerateInterviewPrepParams): Promise<InterviewPrepAIResponse> {
+    const prompt = buildInterviewPrepPrompt(params);
+
+    const response = await openai.responses.create({
+      model: env.OPENAI_MODEL,
+      input: prompt,
+    })
+
+    const text = response.output_text;
+
+    if (!text)
+      throw new InternalServerError('Ai did not return a response', 'AI_EMPTY_RESPONSE');
+
+    let parsed: InterviewPrepResult;
+
+    try {
+      parsed = JSON.parse(text);
+    } catch (error) {
+      throw new InternalServerError("AI returned invalid JSON", "AI_INVALID_JSON")
+    }
+
+    return {
+      result: parsed,
+      usage: {
+        modelUsed: env.OPENAI_MODEL,
+        promptTokens: response.usage?.input_tokens,
+        outputTokens: response.usage?.output_tokens,
+        totalTokens: response.usage?.total_tokens,
+      }
+    }
+  }
+
   return {
     analyzeResume,
     extractJobPostFromText,
     matchResumeToJob,
     generateCoverLetter,
+    generateInterviewPrep,
   };
 };

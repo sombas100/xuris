@@ -59,6 +59,12 @@ enum ApplicationStatus {
   WITHDRAWN
 }
 
+enum InterviewDifficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
 model User {
   id        String  @id @default(cuid())
   clerkId   String  @unique @map("clerk_id")
@@ -231,9 +237,21 @@ model InterviewPrep {
   jobPostId String?  @map("job_post_id")
   jobPost   JobPost? @relation(fields: [jobPostId], references: [id], onDelete: SetNull)
 
-  questions Json
-  tips      Json?
-  summary   String?
+  difficulty InterviewDifficulty?
+
+  summary String?
+
+  technicalQuestions    Json? @map("technical_questions")
+  behaviouralQuestions  Json? @map("behavioural_questions")
+  roleSpecificQuestions Json? @map("role_specific_questions")
+  weaknessAreas         Json? @map("weakness_areas")
+  questionsToAsk        Json? @map("questions_to_ask")
+  tips                  Json?
+
+  modelUsed    String? @map("model_used")
+  promptTokens Int?    @map("prompt_tokens")
+  outputTokens Int?    @map("output_tokens")
+  totalTokens  Int?    @map("total_tokens")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

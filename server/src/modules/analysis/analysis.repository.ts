@@ -117,6 +117,15 @@ export const analysisRepository = () => {
         })
     }
 
+    async function getLatestJobMatch(resumeId: string, jobPostId: string) {
+        return prisma.aIAnalysis.findFirst({
+            where: { resumeId, jobPostId, type: 'JOB_MATCH' },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        })
+    }
+
     return { 
         createResumeAnalysis, 
         getAnalysisById, 
@@ -124,5 +133,6 @@ export const analysisRepository = () => {
         createResumeJobMatchAnalysis,
         getJobMatchAnalysisByJobId,
         getJobMatchAnalysesByResumeId,
+        getLatestJobMatch,
     }
 }

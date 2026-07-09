@@ -85,3 +85,37 @@ export type CoverLetterParams = {
   requirements?: unknown;
   responsibilities?: unknown;
 }
+
+export type InterviewQuestion = {
+  question: string;
+  reason: string;
+  suggestedAnswer: string;
+};
+
+export type InterviewPrepResult = {
+  difficulty: "BEGINNER" | "INTERMEDIATE" | "ADVANCED";
+  summary: string;
+  technicalQuestions: InterviewQuestion[];
+  behaviouralQuestions: InterviewQuestion[];
+  roleSpecificQuestions: InterviewQuestion[];
+  weaknessAreas: string[];
+  questionsToAsk: string[];
+  tips: string[];
+};
+
+export type InterviewPrepAIResponse = {
+  result: InterviewPrepResult;
+  usage: AIUsage;
+};
+
+export type GenerateInterviewPrepParams = {
+  resumeText: string;
+  jobTitle: string;
+  company?: string | null;
+  jobDescription: string;
+  requirements?: unknown;
+  responsibilities?: unknown;
+  jobMatchSummary?: string | null;
+  jobMatchWeaknesses?: unknown;
+  jobMatchMissingKeywords?: unknown;
+}
