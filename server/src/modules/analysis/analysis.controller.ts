@@ -6,7 +6,7 @@ const analysisService = createAnalysisService();
 
 export const analysisController = () => {
     const createJobMatchAnalysis = asyncHandler(async (req, res) => {
-        const userId = "4vtstgervxdgvtxdfg";
+        const userId = req.user!.id;
         const { resumeId, jobPostId } = req.body;
         const result = await analysisService.createJobMatchAnalysis({
             userId,
@@ -21,7 +21,7 @@ export const analysisController = () => {
         const resumeId = String(req.params.resumeId)
         
 
-        const userId = "4vtstgervxdgvtxdfg";
+        const userId = req.user!.id;
 
         const result = await analysisService.analyseResume(resumeId, userId);
 

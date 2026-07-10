@@ -12,7 +12,7 @@ export const resumeController = () => {
     }
 
     
-    const userId = "4vtstgervxdgvtxdfg";
+    const userId = req.user!.id;
 
     const result = await resumeService.uploadResume(req.file, userId);
     
@@ -20,7 +20,7 @@ export const resumeController = () => {
   });
 
   const getCurrentUserResumes = asyncHandler(async (req, res) => {
-    const userId = "4vtstgervxdgvtxdfg";
+    const userId = req.user!.id;
 
     const results = await resumeService.getAllResumes(userId);
 

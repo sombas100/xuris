@@ -6,8 +6,7 @@ const service = coverLetterService();
 
 export const coverLetterController = () => {
     const generateCoverLetter = asyncHandler(async (req, res) => {
-        const userId = "4vtstgervxdgvtxdfg";
-
+        const userId = req.user!.id;
         const result = await service.createTailoredCoverLetter(req.body, userId);
 
         return successResponse(res, result, 201);

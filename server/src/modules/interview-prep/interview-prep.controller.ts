@@ -7,7 +7,7 @@ const service = interviewPrepService();
 
 export const interviewPrepController = () => {
     const generateInterviewPrep = asyncHandler(async (req, res) => {
-            const userId = "4vtstgervxdgvtxdfg";
+            const userId = req.user!.id;
             const { resumeId, jobPostId } = req.body
 
             const result = await service.createInterviewPrep({
