@@ -4,6 +4,7 @@ import { SignUpPage } from "../pages/sign-up-page";
 import { ProtectedRoute } from "./Protected-route";
 import { DashboardPage } from "../pages/dashboard-page";
 import { LandingPage } from "../pages/landing-page";
+import DashboardLayout from "@/layouts/DashboardLayout";
 
 const AppRoutes = () => {
   return (
@@ -13,14 +14,16 @@ const AppRoutes = () => {
         <Route path="/sign-in/*" element={<SignInPage />} />
         <Route path="/sign-up/*" element={<SignUpPage />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route element={<DashboardLayout />}>
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
       </Routes>
     </div>
   );

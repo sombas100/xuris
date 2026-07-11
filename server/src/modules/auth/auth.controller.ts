@@ -1,5 +1,8 @@
 import { asyncHandler } from "../../middleware/async-handler";
 import { successResponse } from "../../utils/api-response";
+import { authRepository } from "./auth.repository";
+
+const repository = authRepository();
 
 export const authController = () => {
   const getCurrentUser = asyncHandler(async (req, res) => {

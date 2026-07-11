@@ -2,5 +2,9 @@
 
 
 @theme {
+  --color-primary: #CC5DE8;
+  --color-secondary: #ae3ec9;
+  --color-text: #CCCACA;
+  --color-hero-h1: #FFFEFE;
   --color-background: #0B0B0F;
 }

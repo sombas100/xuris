@@ -1,24 +1,67 @@
-import { UserButton, useUser } from "@clerk/clerk-react";
+import DashboardStatCard from "@/components/dashboard/DashboardStatCard";
 
 export function DashboardPage() {
-  const { user, isLoaded } = useUser();
-
-  if (!isLoaded) {
-    return <div>Loading dashboard...</div>;
-  }
-
   return (
-    <main>
-      <header>
-        <h1>
-          Welcome
-          {user?.firstName ? `, ${user.firstName}` : ""}
-        </h1>
+    <main className="space-y-8 ">
+      <section>
+        <h2 className="text-3xl font-semibold tracking-tight text-white">
+          Your career workspace
+        </h2>
 
-        <UserButton />
-      </header>
+        <p className="mt-3 max-w-2xl text-white/60">
+          Everything you need to analyse your resume, prepare for interviews,
+          optimise applications and track your progress.
+        </p>
+      </section>
 
-      <p>Your Xuris dashboard is ready.</p>
+      <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <DashboardStatCard
+          title="Resume analyses"
+          value="0"
+          description="AI resume reviews completed"
+        />
+
+        <DashboardStatCard
+          title="Job comparisons"
+          value="0"
+          description="Compared against job adverts"
+        />
+
+        <DashboardStatCard
+          title="Interview sessions"
+          value="0"
+          description="Interview prep generated"
+        />
+
+        <DashboardStatCard
+          title="Applications"
+          value="0"
+          description="Tracked applications"
+        />
+      </section>
+
+      <section className="grid gap-6 xl:grid-cols-3">
+        <div className="rounded-3xl border border-white/10 bg-white/3 p-6 xl:col-span-2">
+          <h3 className="text-lg font-semibold text-white">Recent activity</h3>
+
+          <div className="mt-6 flex h-72 items-center justify-center rounded-2xl border border-dashed border-white/10">
+            <p className="text-white/40">
+              Your recent AI analyses will appear here.
+            </p>
+          </div>
+        </div>
+
+        <div className="rounded-3xl border border-white/10 bg-white/3 p-6">
+          <h3 className="text-lg font-semibold text-white">AI insights</h3>
+
+          <div className="mt-6 flex h-72 items-center justify-center rounded-2xl border border-dashed border-primary/20">
+            <p className="max-w-xs text-center text-white/40">
+              Resume suggestions, ATS improvements and interview tips will
+              appear here.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

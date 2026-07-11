@@ -43,12 +43,26 @@ export const authRepository = () => {
         where: { clerkId },
         data,
     });
-}
+  }
+
+    async function getCurrentUser(id: string) {
+      return prisma.user.findFirst({
+        where: { id },
+        select: {
+          id: true,
+          clerkId: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+        }
+      })
+    }
 
   return {
     findByClerkId,
     createUser,
     findOrCreateUser,
     updateUserFromClerk,
+    getCurrentUser,
   };
 };
