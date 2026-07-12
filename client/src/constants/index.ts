@@ -11,6 +11,7 @@ import {
   LayoutDashboard,
   MessagesSquare,
   ScanSearch,
+  Newspaper,
 } from "lucide-react";
 
 export const dashboardLinks = [
@@ -18,6 +19,11 @@ export const dashboardLinks = [
     name: "Overview",
     href: "/dashboard",
     icon: LayoutDashboard,
+  },
+  {
+    name: "Resumes",
+    href: "/dashboard/resumes",
+    icon: Newspaper,
   },
   {
     name: "Resume analysis",

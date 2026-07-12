@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(morgan(env.NODE_ENV === "production" ? "combined" : "dev"));
 
-app.use('/api', setRateLimit)
+// app.use('/api', setRateLimit)
 app.use('/api/resumes/v1', resumeRoutes);
 app.use('/api/analysis/v1', analysisRoutes);
 app.use('/api/jobs/v1', jobRoutes);
