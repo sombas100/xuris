@@ -1,3 +1,4 @@
+import { ClerkTokenTest } from "@/components/ClerkTokenTest";
 import DashboardStatCard from "@/components/dashboard/DashboardStatCard";
 
 // type DashboardSummary = {
@@ -12,6 +13,7 @@ import DashboardStatCard from "@/components/dashboard/DashboardStatCard";
 export function DashboardPage() {
   return (
     <div className="space-y-8 ">
+      {/* <ClerkTokenTest /> */}
       <section>
         <h2 className="text-3xl font-semibold tracking-tight text-white">
           Your career workspace

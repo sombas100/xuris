@@ -15,9 +15,9 @@ type CreateResumeData = {
 };
 
 export const resumeRepository = () => {
-    async function retrieveResume(id: string) {
+    async function retrieveResume(id: string, userId: string) {
         return prisma.resume.findUnique({
-            where: { id },
+            where: { id, userId },
             select: {
                 id: true,
                 title: true,
@@ -83,9 +83,9 @@ export const resumeRepository = () => {
         })
     }
 
-    async function deleteResume(id: string) {
+    async function deleteResume(id: string, userId: string) {
         return prisma.resume.delete({
-            where: { id }
+            where: { id, userId }
         })
     }
 

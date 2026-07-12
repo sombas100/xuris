@@ -1,7 +1,7 @@
 export const queryKeys = {
   resumes: {
     all: ["resumes"] as const,
-    lists: () => [...queryKeys.resumes.all, "list"] as const,
+    list: () => [...queryKeys.resumes.all, "list"] as const,
     detail: (resumeId: string) =>
       [...queryKeys.resumes.all, "detail", resumeId] as const,
     analysis: (resumeId: string) =>

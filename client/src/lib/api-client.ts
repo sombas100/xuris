@@ -13,6 +13,11 @@ type ApiRequestOptions = Omit<RequestInit, "body"> & {
   getToken?: GetToken;
 };
 
+export type ApiRequest = <TResponse>(
+  endpoint: string,
+  options?: ApiRequestOptions,
+) => Promise<TResponse>;
+
 async function parseResponseBody(response: Response): Promise<unknown> {
   const contentType = response.headers.get("content-type");
 

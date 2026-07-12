@@ -1,19 +1,17 @@
 import { useAuth } from "@clerk/clerk-react";
 import { useCallback } from "react";
 
-import { apiClient } from "@/lib/api-client";
+import {
+  apiClient,
+  type ApiRequest,
+} from "@/lib/api-client";
 
-type ApiRequestOptions = Parameters<typeof apiClient>[1];
-
-export function useApiClient() {
+export function useApiClient(): ApiRequest {
   const { getToken } = useAuth();
 
   return useCallback(
-    <TResponse>(
-      endpoint: string,
-      options: ApiRequestOptions = {},
-    ): Promise<TResponse> => {
-      return apiClient<TResponse>(endpoint, {
+    (endpoint, options = {}) => {
+      return apiClient(endpoint, {
         ...options,
         getToken,
       });

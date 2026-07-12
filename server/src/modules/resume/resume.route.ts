@@ -7,8 +7,8 @@ const controller = resumeController()
 const router = express.Router();
 
 router.post('/upload', requireUser, upload.single('resume'), controller.uploadResume)
-router.get('/:id', controller.getResumeById);
+router.get('/:id', requireUser, controller.getResumeById);
 router.get('/', requireUser, controller.getCurrentUserResumes);
-router.delete('/:id', controller.deleteResume);
+router.delete('/:id', requireUser, controller.deleteResume);
 
 export default router;

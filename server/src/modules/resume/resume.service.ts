@@ -48,8 +48,8 @@ export const resumeService = () => {
   }
 }
 
-  async function getResume(id: string) {
-    const resume = await repository.retrieveResume(id);
+  async function getResume(id: string, userId: string) {
+    const resume = await repository.retrieveResume(id, userId);
 
     if (!resume) {
       throw new NotFoundError("Resume not found", "RESUME_NOT_FOUND");
@@ -70,8 +70,8 @@ export const resumeService = () => {
     return repository.retrieveAllResumes(userId); 
   }
 
-  async function deleteResume(id: string) {
-    const resume = await repository.retrieveResume(id);
+  async function deleteResume(id: string, userId: string) {
+    const resume = await repository.retrieveResume(id, userId);
 
     if (!resume)
       throw new NotFoundError("Resume not found", "RESUME_NOT_FOUND");
@@ -80,7 +80,7 @@ export const resumeService = () => {
       throw new NotFoundError("Resume file key not found", "FILE_KEY_NOT_FOUND")
 
     await storage.deleteResumeFromS3(resume.fileKey);
-    const deletedResume = repository.deleteResume(id);
+    const deletedResume = repository.deleteResume(id, userId);
 
     return deletedResume;
   }

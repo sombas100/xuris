@@ -30,8 +30,9 @@ export const resumeController = () => {
   const getResumeById = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const resumeId = String(id)
+    const userId = req.user!.id
 
-    const result = await resumeService.getResume(resumeId);
+    const result = await resumeService.getResume(resumeId, userId);
 
     return successResponse(res, result, 200);
   });
@@ -39,8 +40,9 @@ export const resumeController = () => {
   const deleteResume = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const resumeId = String(id);
+    const userId = req.user!.id
 
-    const result = await resumeService.deleteResume(resumeId);
+    const result = await resumeService.deleteResume(resumeId, userId);
 
     return successResponse(res, result, 204);
   })
