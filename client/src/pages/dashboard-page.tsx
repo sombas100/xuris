@@ -1,8 +1,17 @@
 import DashboardStatCard from "@/components/dashboard/DashboardStatCard";
 
+// type DashboardSummary = {
+//   resumeAnalyses: number;
+//   jobComparisons: number;
+//   interviewSessions: number;
+//   applications: number;
+//   recentActivity: DashboardActivity[];
+//   insights: DashboardInsight[];
+// };
+
 export function DashboardPage() {
   return (
-    <main className="space-y-8 ">
+    <div className="space-y-8 ">
       <section>
         <h2 className="text-3xl font-semibold tracking-tight text-white">
           Your career workspace
@@ -62,6 +71,6 @@ export function DashboardPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

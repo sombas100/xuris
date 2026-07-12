@@ -8,24 +8,28 @@ import DashboardLayout from "@/layouts/DashboardLayout";
 
 const AppRoutes = () => {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/sign-in/*" element={<SignInPage />} />
-        <Route path="/sign-up/*" element={<SignUpPage />} />
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/sign-in/*" element={<SignInPage />} />
+      <Route path="/sign-up/*" element={<SignUpPage />} />
 
-        <Route element={<DashboardLayout />}>
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
-      </Routes>
-    </div>
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<DashboardPage />} />
+
+        {/* Upcoming feature routes */}
+        {/* <Route path="resumes" element={<ResumesPage />} /> */}
+        {/* <Route path="jobs" element={<JobsPage />} /> */}
+        {/* <Route path="interview-prep" element={<InterviewPrepPage />} /> */}
+        {/* <Route path="applications" element={<ApplicationsPage />} /> */}
+      </Route>
+    </Routes>
   );
 };
 

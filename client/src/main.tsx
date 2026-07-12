@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { BrowserRouter as Router } from "react-router-dom";
+import { QueryProvider } from "./providers/QueryProvider.tsx";
 import App from "./App.tsx";
 
 const publishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -19,9 +20,11 @@ createRoot(document.getElementById("root")!).render(
       signUpFallbackRedirectUrl="/dashboard"
       afterSignOutUrl="/"
     >
-      <Router>
-        <App />
-      </Router>
+      <QueryProvider>
+        <Router>
+          <App />
+        </Router>
+      </QueryProvider>
     </ClerkProvider>
   </StrictMode>,
 );
