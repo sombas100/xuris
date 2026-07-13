@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 import { useDeleteResume } from "../hooks/use-delete-resume";
 import type { Resume } from "../resume.types";
+import { ResumeStatusBadge } from "./ResumeStatusBadge";
 
 type ResumeCardProps = {
   resume: Resume;
@@ -123,19 +124,7 @@ export function ResumeCard({ resume }: ResumeCardProps) {
           </p>
         </div>
 
-        <span
-          className={cn(
-            "inline-flex shrink-0 items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium",
-            statusBadge.className,
-          )}
-        >
-          <span
-            aria-hidden="true"
-            className={cn("size-2 rounded-full", statusBadge.dotClassName)}
-          />
-
-          {statusBadge.label}
-        </span>
+        <ResumeStatusBadge status={resume.status} />
       </div>
 
       <dl className="mt-6 space-y-3 text-sm">

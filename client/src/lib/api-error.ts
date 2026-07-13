@@ -1,7 +1,10 @@
 export type ApiErrorResponse = {
-    message?: string;
-    code?: string;
-    errors?: unknown;
+  success: false;
+  error: {
+    code: string;
+    message: string;
+    details?: unknown;
+  };
 };
 
 export class ApiError extends Error {

@@ -6,6 +6,7 @@ import { DashboardPage } from "../pages/dashboard-page";
 import { LandingPage } from "../pages/landing-page";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import { ResumesPage } from "@/pages/ResumesPage";
+import { ResumeDetailsPage } from "@/features/resumes/pages/ResumeDetailsPage";
 
 const AppRoutes = () => {
   return (
@@ -26,6 +27,7 @@ const AppRoutes = () => {
 
         {/* Upcoming feature routes */}
         <Route path="resumes" element={<ResumesPage />} />
+        <Route path="resumes/:resumeId" element={<ResumeDetailsPage />} />
         {/* <Route path="jobs" element={<JobsPage />} /> */}
         {/* <Route path="interview-prep" element={<InterviewPrepPage />} /> */}
         {/* <Route path="applications" element={<ApplicationsPage />} /> */}

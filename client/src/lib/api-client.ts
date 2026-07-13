@@ -67,13 +67,13 @@ export async function apiClient<TResponse>(
         : undefined;
 
     throw new ApiError(
-      errorBody?.message ||
+        errorBody?.error.message ||
         (typeof responseBody === "string" && responseBody) ||
         "The request could not be completed.",
-      response.status,
-      errorBody?.code,
-      errorBody?.errors,
-    );
+        response.status,
+        errorBody?.error.code,
+        errorBody?.error.details,
+);
   }
 
   return responseBody as TResponse;
