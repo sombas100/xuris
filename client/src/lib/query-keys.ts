@@ -30,6 +30,9 @@ export const queryKeys = {
   },
 
   dashboard: {
-    summary: ["dashboard", "summary"] as const,
-  },
+  all: ["dashboard"] as const,
+
+  summary: () =>
+    [...queryKeys.dashboard.all, "summary"] as const,
+},
 } as const;

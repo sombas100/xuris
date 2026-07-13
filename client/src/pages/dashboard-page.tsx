@@ -1,23 +1,17 @@
-import { ClerkTokenTest } from "@/components/ClerkTokenTest";
 import DashboardContent from "@/components/dashboard/DashboardContent";
+import DashboardInsights from "../features/dashboard/DashboardInsights";
 import DashboardPanel from "@/components/dashboard/DashboardPanel";
-import DashboardPlaceholder from "@/components/dashboard/DashboardPlaceholder";
+import DashboardRecentActivity from "../features/dashboard/DashboardRecentActivity";
 import DashboardStatCard from "@/components/dashboard/DashboardStatCard";
 
-// type DashboardSummary = {
-//   resumeAnalyses: number;
-//   jobComparisons: number;
-//   interviewSessions: number;
-//   applications: number;
-//   recentActivity: DashboardActivity[];
-//   insights: DashboardInsight[];
-// };
+import { useDashboardSummary } from "@/features/dashboard/hooks/use-dashboard-summary";
 
 export function DashboardPage() {
+  const { data: summary, isPending, isError, error } = useDashboardSummary();
+
   return (
     <DashboardContent>
-      <div className="space-y-8 ">
-        {/* <ClerkTokenTest /> */}
+      <div className="space-y-8">
         <section>
           <h2 className="text-3xl font-semibold tracking-tight text-white">
             Your career workspace
@@ -29,44 +23,62 @@ export function DashboardPage() {
           </p>
         </section>
 
-        <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          <DashboardStatCard
-            title="Resume analyses"
-            value="0"
-            description="AI resume reviews completed"
-          />
+        {isPending && (
+          <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div
+                key={index}
+                className="h-36 animate-pulse rounded-3xl border border-white/10 bg-background/50"
+              />
+            ))}
+          </section>
+        )}
 
-          <DashboardStatCard
-            title="Job comparisons"
-            value="0"
-            description="Compared against job adverts"
-          />
+        {isError && (
+          <section className="rounded-3xl border border-destructive/30 bg-destructive/5 p-6">
+            <p className="text-destructive">{error.message}</p>
+          </section>
+        )}
 
-          <DashboardStatCard
-            title="Interview sessions"
-            value="0"
-            description="Interview prep generated"
-          />
+        {summary && (
+          <>
+            <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+              <DashboardStatCard
+                title="Resume analyses"
+                value={String(summary.counts.resumeAnalyses)}
+                description="AI resume reviews completed"
+              />
 
-          <DashboardStatCard
-            title="Applications"
-            value="0"
-            description="Tracked applications"
-          />
-        </section>
+              <DashboardStatCard
+                title="Job comparisons"
+                value={String(summary.counts.jobComparisons)}
+                description="Compared against job adverts"
+              />
 
-        <section className="grid gap-6 xl:grid-cols-3">
-          <DashboardPanel title="Recent activity" className="xl:col-span-2">
-            <DashboardPlaceholder message="Your recent AI analyses will appear here." />
-          </DashboardPanel>
+              <DashboardStatCard
+                title="Interview sessions"
+                value={String(summary.counts.interviewSessions)}
+                description="Interview prep generated"
+              />
 
-          <DashboardPanel title="AI insights">
-            <DashboardPlaceholder
-              className="border-primary/20"
-              message="Resume suggestions, ATS improvements and interview tips will appear here."
-            />
-          </DashboardPanel>
-        </section>
+              <DashboardStatCard
+                title="Applications"
+                value={String(summary.counts.applications)}
+                description="Tracked applications"
+              />
+            </section>
+
+            <section className="grid gap-6 xl:grid-cols-3">
+              <DashboardPanel title="Recent activity" className="xl:col-span-2">
+                <DashboardRecentActivity activities={summary.recentActivity} />
+              </DashboardPanel>
+
+              <DashboardPanel title="AI insights">
+                <DashboardInsights insights={summary.insights} />
+              </DashboardPanel>
+            </section>
+          </>
+        )}
       </div>
     </DashboardContent>
   );

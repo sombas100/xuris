@@ -195,7 +195,7 @@ export function ResumeDetailsPage() {
                   buttonVariants({
                     variant: "ghost",
                   }),
-                  "transition-colors hover:text-gray-500",
+                  "transition-colors text-white hover:text-gray-500",
                 )}
               >
                 <Download className="size-4" />
@@ -207,7 +207,7 @@ export function ResumeDetailsPage() {
                 variant="destructive"
                 disabled={deleteMutation.isPending}
                 onClick={handleDelete}
-                className="cursor-pointer bg-gray-600 transition-colors hover:bg-gray-800"
+                className="cursor-pointer text-white transition-colors hover:text-red-500"
               >
                 <Trash2 className="size-4" />
 
@@ -238,7 +238,7 @@ export function ResumeDetailsPage() {
             </div>
 
             {resume.extractedText ? (
-              <div className="mt-6 max-h-[700px] overflow-y-auto rounded-2xl border border-white/10 bg-black/15 p-6">
+              <div className="mt-6 max-h-175 overflow-y-auto rounded-2xl border border-white/10 bg-black/15 p-6">
                 <pre className="whitespace-pre-wrap font-sans text-sm leading-7 text-white/70">
                   {resume.extractedText}
                 </pre>
@@ -262,7 +262,7 @@ export function ResumeDetailsPage() {
                 <div className="flex items-start justify-between gap-4">
                   <dt className="text-white/40">Original name</dt>
 
-                  <dd className="max-w-[60%] break-words text-right text-white/70">
+                  <dd className="max-w-[60%] wrap-break-word text-right text-white/70">
                     {resume.originalName}
                   </dd>
                 </div>

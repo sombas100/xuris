@@ -25,12 +25,16 @@ export function useCreateResumeAnalysis() {
         response,
       );
 
-      await queryClient.invalidateQueries({
+      await Promise.all([
+        queryClient.invalidateQueries({
         queryKey:
-          queryKeys.resumeAnalysis.byResume(
-            resumeId,
-          ),
-      });
-    },
+            queryKeys.resumeAnalysis.byResume(resumeId),
+        }),
+
+        queryClient.invalidateQueries({
+            queryKey: queryKeys.dashboard.summary(),
+        }),
+    ]);
+        },
   });
 }
