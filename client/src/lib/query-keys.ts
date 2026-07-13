@@ -8,6 +8,27 @@ export const queryKeys = {
       [...queryKeys.resumes.all, "analysis", resumeId] as const,
   },
 
+  resumeAnalysis: {
+    all: ["resume-analysis"] as const,
+
+    lists: () =>
+      [...queryKeys.resumeAnalysis.all, "list"] as const,
+
+    byResume: (resumeId: string) =>
+      [
+        ...queryKeys.resumeAnalysis.lists(),
+        "resume",
+        resumeId,
+      ] as const,
+
+    detail: (analysisId: string) =>
+      [
+        ...queryKeys.resumeAnalysis.all,
+        "detail",
+        analysisId,
+      ] as const,
+  },
+
   dashboard: {
     summary: ["dashboard", "summary"] as const,
   },

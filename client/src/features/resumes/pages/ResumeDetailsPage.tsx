@@ -101,6 +101,16 @@ export function ResumeDetailsPage() {
     });
   }
 
+  function handleOpenAnalysis() {
+    if (!resume) {
+      return;
+    }
+
+    navigate(
+      `/dashboard/resume-analysis?resumeId=${encodeURIComponent(resume.id)}`,
+    );
+  }
+
   if (isPending) {
     return (
       <DashboardContent>
@@ -176,34 +186,28 @@ export function ResumeDetailsPage() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3 text-text">
-              <Button
-                className={"hover:text-gray-500 transition-colors"}
-                variant={"ghost"}
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={resume.downloadUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={cn(
+                  buttonVariants({
+                    variant: "ghost",
+                  }),
+                  "transition-colors hover:text-gray-500",
+                )}
               >
-                <a
-                  href={resume.downloadUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={cn(
-                    buttonVariants({
-                      variant: "ghost",
-                    }),
-                  )}
-                >
-                  <Download className="size-4" />
-                  Download
-                </a>
-              </Button>
+                <Download className="size-4" />
+                Download
+              </a>
 
               <Button
                 type="button"
                 variant="destructive"
                 disabled={deleteMutation.isPending}
                 onClick={handleDelete}
-                className={
-                  "bg-gray-600 hover:bg-gray-800 transition-colors cursor-pointer"
-                }
+                className="cursor-pointer bg-gray-600 transition-colors hover:bg-gray-800"
               >
                 <Trash2 className="size-4" />
 
@@ -234,7 +238,7 @@ export function ResumeDetailsPage() {
             </div>
 
             {resume.extractedText ? (
-              <div className="mt-6 max-h-[175] overflow-y-auto rounded-2xl border border-white/10 bg-black/15 p-6">
+              <div className="mt-6 max-h-[700px] overflow-y-auto rounded-2xl border border-white/10 bg-black/15 p-6">
                 <pre className="whitespace-pre-wrap font-sans text-sm leading-7 text-white/70">
                   {resume.extractedText}
                 </pre>
@@ -258,7 +262,7 @@ export function ResumeDetailsPage() {
                 <div className="flex items-start justify-between gap-4">
                   <dt className="text-white/40">Original name</dt>
 
-                  <dd className="max-w-[60%] wrap-break-word text-right text-white/70">
+                  <dd className="max-w-[60%] break-words text-right text-white/70">
                     {resume.originalName}
                   </dd>
                 </div>
@@ -315,12 +319,10 @@ export function ResumeDetailsPage() {
                 type="button"
                 className="mt-5 w-full cursor-pointer"
                 disabled={resume.status !== "EXTRACTED"}
-                onClick={() => {
-                  toast.info("Resume analysis is coming next.");
-                }}
+                onClick={handleOpenAnalysis}
               >
                 <Sparkles className="size-4" />
-                Analyse resume
+                Open resume analysis
               </Button>
 
               {resume.status !== "EXTRACTED" && (

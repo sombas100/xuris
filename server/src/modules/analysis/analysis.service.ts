@@ -12,7 +12,7 @@ const ai = aiService();
 
 export const analysisService = () => {
   async function analyseResume(resumeId: string, userId: string) {
-    const resume = await resumeRepo.retrieveResume(resumeId);
+    const resume = await resumeRepo.retrieveResume(resumeId, userId);
 
     if (!resume) {
       throw new NotFoundError("Resume not found", "RESUME_NOT_FOUND");
@@ -49,7 +49,7 @@ export const analysisService = () => {
     resumeId: string;
     jobPostId: string;
   }) {
-    const resume = await resumeRepo.retrieveResume(resumeId);
+    const resume = await resumeRepo.retrieveResume(resumeId, userId);
 
     if (!resume) {
       throw new NotFoundError("Resume not found", "RESUME_NOT_FOUND");
@@ -89,8 +89,8 @@ export const analysisService = () => {
     });
   }
 
-  async function getAnalysisById(id: string) {
-    const analysis = await analysisRepo.getAnalysisById(id);
+  async function getAnalysisById(id: string, userId: string) {
+    const analysis = await analysisRepo.getAnalysisById(id, userId);
 
     if (!analysis) {
       throw new NotFoundError("Analysis not found", "ANALYSIS_NOT_FOUND");
@@ -99,20 +99,20 @@ export const analysisService = () => {
     return analysis;
   }
 
-  async function getResumeAnalyses(resumeId: string) {
-    return analysisRepo.getResumeAnalyses(resumeId);
+  async function getResumeAnalyses(resumeId: string, userId: string) {
+    return analysisRepo.getResumeAnalyses(resumeId, userId);
   }
 
-  async function getJobMatchAnalysisByJobId(jobPostId: string) {
-    const analysis = await analysisRepo.getJobMatchAnalysisByJobId(jobPostId);
+  async function getJobMatchAnalysisByJobId(jobPostId: string, userId: string) {
+    const analysis = await analysisRepo.getJobMatchAnalysisByJobId(jobPostId, userId);
 
     if (!analysis)
             throw new NotFoundError("Analysis not found", "ANALYSIS_NOT_FOUND");
 
     return analysis;
   }
-  async function getJobMatchAnalysisByResumeId(resumeId: string) {
-    return analysisRepo.getJobMatchAnalysesByResumeId(resumeId);
+  async function getJobMatchAnalysisByResumeId(resumeId: string, userId: string) {
+    return analysisRepo.getJobMatchAnalysesByResumeId(resumeId, userId);
   }
 
 

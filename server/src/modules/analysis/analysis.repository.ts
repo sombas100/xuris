@@ -87,30 +87,33 @@ export const analysisRepository = () => {
         })
     }
 
-    async function getAnalysisById(id: string) {
+    async function getAnalysisById(id: string, userId: string) {
         return prisma.aIAnalysis.findUnique({
-            where: { id }
+            where: { id, userId }
         })
     }
 
-    async function getResumeAnalyses(resumeId: string) {
+    async function getResumeAnalyses(resumeId: string, userId: string) {
         return prisma.aIAnalysis.findMany({
-            where: { resumeId },
+            where: { resumeId, userId, type: AnalysisType.RESUME_REVIEW },
             orderBy: {
                 createdAt: 'desc'
             },
         })
     }
 
-    async function getJobMatchAnalysisByJobId(jobPostId: string) {
-        return prisma.aIAnalysis.findUnique({
-            where: { id: jobPostId }
+    async function getJobMatchAnalysisByJobId(jobPostId: string, userId: string) {
+        return prisma.aIAnalysis.findFirst({
+            where: { jobPostId, userId, type: AnalysisType.JOB_MATCH },
+            orderBy: {
+                createdAt: 'desc',
+            }
         })
     }
 
-    async function getJobMatchAnalysesByResumeId(resumeId: string) {
+    async function getJobMatchAnalysesByResumeId(resumeId: string, userId: string) {
         return prisma.aIAnalysis.findMany({
-            where: { resumeId, type: 'JOB_MATCH' },
+            where: { resumeId, userId, type: AnalysisType.JOB_MATCH },
             orderBy: {
                 createdAt: 'desc'
             }

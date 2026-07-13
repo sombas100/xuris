@@ -12,12 +12,6 @@ type ResumeCardProps = {
   resume: Resume;
 };
 
-type StatusBadge = {
-  label: string;
-  className: string;
-  dotClassName: string;
-};
-
 function formatFileSize(bytes: number | null) {
   if (bytes === null) {
     return "Unknown size";
@@ -51,41 +45,8 @@ function formatFileType(mimeType: string | null) {
   }
 }
 
-function getStatusBadge(status: Resume["status"]): StatusBadge {
-  switch (status) {
-    case "UPLOADED":
-      return {
-        label: "Processing",
-        className: "border-blue-500/20 bg-blue-500/10 text-blue-300",
-        dotClassName: "animate-pulse bg-blue-400",
-      };
-
-    case "EXTRACTED":
-      return {
-        label: "Ready",
-        className: "border-green-500/20 bg-green-500/10 text-green-300",
-        dotClassName: "bg-green-400",
-      };
-
-    case "FAILED":
-      return {
-        label: "Failed",
-        className: "border-red-500/20 bg-red-500/10 text-red-300",
-        dotClassName: "bg-red-400",
-      };
-
-    default:
-      return {
-        label: status,
-        className: "border-white/10 bg-white/5 text-white/60",
-        dotClassName: "bg-white/40",
-      };
-  }
-}
-
 export function ResumeCard({ resume }: ResumeCardProps) {
   const deleteMutation = useDeleteResume();
-  const statusBadge = getStatusBadge(resume.status);
 
   function handleDelete() {
     const confirmed = window.confirm(

@@ -1,7 +1,7 @@
 import { UserButton, useUser } from "@clerk/clerk-react";
 
 const DashboardHeader = () => {
-  const { user, isLoaded } = useUser();
+  const { user } = useUser();
   return (
     <header className="sticky top-4 z-30 px-4 lg:px-6">
       <div className="flex h-16 items-center justify-between rounded-3xl border border-white/10 bg-black/40 px-5 shadow-xl backdrop-blur-xl">
