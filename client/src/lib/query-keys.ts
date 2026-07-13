@@ -29,10 +29,43 @@ export const queryKeys = {
       ] as const,
   },
 
+  jobPosts: {
+    all: ["job-posts"] as const,
+
+    list: () =>
+      [...queryKeys.jobPosts.all, "list"] as const,
+
+    detail: (jobPostId: string) =>
+      [
+        ...queryKeys.jobPosts.all,
+        "detail",
+        jobPostId,
+      ] as const,
+  },
+
+  jobComparison: {
+    all: ["job-comparison"] as const,
+
+    byResume: (resumeId: string) =>
+      [
+        ...queryKeys.jobComparison.all,
+        "resume",
+        resumeId,
+      ] as const,
+
+    detail: (analysisId: string) =>
+      [
+        ...queryKeys.jobComparison.all,
+        "detail",
+        analysisId,
+      ] as const,
+  },
+
   dashboard: {
   all: ["dashboard"] as const,
 
   summary: () =>
     [...queryKeys.dashboard.all, "summary"] as const,
 },
+
 } as const;

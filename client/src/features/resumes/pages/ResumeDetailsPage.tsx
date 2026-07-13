@@ -1,4 +1,11 @@
-import { ArrowLeft, Download, FileText, Sparkles, Trash2 } from "lucide-react";
+import {
+  ArrowLeft,
+  Download,
+  FileText,
+  Scale,
+  Sparkles,
+  Trash2,
+} from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -307,12 +314,11 @@ export function ResumeDetailsPage() {
               </div>
 
               <h2 className="mt-4 text-lg font-semibold text-white">
-                Analyse this resume
+                Ai actions
               </h2>
 
               <p className="mt-2 text-sm leading-6 text-white/50">
-                Get structured feedback on content, impact, readability and ATS
-                compatibility.
+                Analyse this resume or compare it with a saved job advert.
               </p>
 
               <Button
@@ -323,6 +329,22 @@ export function ResumeDetailsPage() {
               >
                 <Sparkles className="size-4" />
                 Open resume analysis
+              </Button>
+
+              <Button
+                type="button"
+                className="mt-3 w-full cursor-pointer"
+                disabled={resume.status !== "EXTRACTED"}
+                onClick={() => {
+                  navigate(
+                    `/dashboard/job-comparison?resumeId=${encodeURIComponent(
+                      resume.id,
+                    )}`,
+                  );
+                }}
+              >
+                <Scale className="size-4" />
+                Compare with a job
               </Button>
 
               {resume.status !== "EXTRACTED" && (

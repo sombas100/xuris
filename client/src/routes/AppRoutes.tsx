@@ -8,6 +8,7 @@ import DashboardLayout from "@/layouts/DashboardLayout";
 import { ResumesPage } from "@/pages/ResumesPage";
 import { ResumeDetailsPage } from "@/features/resumes/pages/ResumeDetailsPage";
 import { ResumeAnalysisPage } from "@/features/resume-analysis/pages/ResumeAnalysisPage";
+import { JobComparisonPage } from "@/features/job-comparison/pages/JobComparisonPage";
 
 const AppRoutes = () => {
   return (
@@ -30,7 +31,7 @@ const AppRoutes = () => {
         <Route path="resumes" element={<ResumesPage />} />
         <Route path="resumes/:resumeId" element={<ResumeDetailsPage />} />
         <Route path="resume-analysis" element={<ResumeAnalysisPage />} />
-        {/* <Route path="jobs" element={<JobsPage />} /> */}
+        <Route path="job-comparison" element={<JobComparisonPage />} />
         {/* <Route path="interview-prep" element={<InterviewPrepPage />} /> */}
         {/* <Route path="applications" element={<ApplicationsPage />} /> */}
       </Route>

@@ -1,31 +1,15 @@
 import { aiService } from "../ai/ai.service";
 import { jobRepository } from "./job.repository";
-import type {
-  CreateJobPostInput,
-  CreateJobPostFromTextInput,
-} from "./job.validation";
+import type { CreateJobPostFromTextInput } from "./job.validation";
+import { NotFoundError } from "../../errors/NotFoundError";
 
 const repository = jobRepository();
 const ai = aiService();
 
 export const jobService = () => {
-  async function createJobPost(data: CreateJobPostInput, userId: string) {
-    return repository.createJob({
-      userId,
-      title: data.title,
-      company: data.company,
-      location: data.location,
-      salary: data.salary,
-      description: data.description,
-      jobUrl: data.jobUrl,
-      requirements: data.requirements,
-      responsibilities: data.responsibilities,
-    });
-  }
-
   async function createJobPostFromText(
     data: CreateJobPostFromTextInput,
-    userId: string
+    userId: string,
   ) {
     const extractedJob = await ai.extractJobPostFromText(data.rawText);
 
@@ -41,8 +25,26 @@ export const jobService = () => {
     });
   }
 
+  async function getCurrentUserJobPosts(userId: string) {
+    return repository.retrieveUserJobPosts(userId);
+  }
+
+  async function getJobPost(id: string, userId: string) {
+    const jobPost = await repository.retrieveJobPost(id, userId);
+
+    if (!jobPost) {
+      throw new NotFoundError(
+        "Job post not found",
+        "JOB_POST_NOT_FOUND",
+      );
+    }
+
+    return jobPost;
+  }
+
   return {
-    createJobPost,
     createJobPostFromText,
+    getCurrentUserJobPosts,
+    getJobPost,
   };
 };

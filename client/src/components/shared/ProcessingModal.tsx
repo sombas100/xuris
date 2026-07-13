@@ -1,5 +1,6 @@
-import { LoaderCircle } from "lucide-react";
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
+import { LoaderCircle } from "lucide-react";
 
 type ProcessingModalProps = {
   open: boolean;
@@ -30,9 +31,9 @@ export function ProcessingModal({
     return null;
   }
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm"
+      className="fixed inset-0 z-9999 flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="processing-modal-title"
@@ -40,7 +41,7 @@ export function ProcessingModal({
         description ? "processing-modal-description" : undefined
       }
     >
-      <div className="w-full max-w-sm rounded-3xl border border-white/10 bg-background p-8 text-center shadow-2xl">
+      <div className="relative z-10000 w-full max-w-sm rounded-3xl border border-white/15 bg-background p-8 text-center shadow-2xl shadow-black/50">
         <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-primary/10">
           <LoaderCircle
             className="size-7 animate-spin text-primary"
@@ -58,7 +59,7 @@ export function ProcessingModal({
         {description && (
           <p
             id="processing-modal-description"
-            className="mt-2 text-sm leading-6 text-white/50"
+            className="mt-2 text-sm leading-6 text-white/60"
           >
             {description}
           </p>
@@ -68,6 +69,7 @@ export function ProcessingModal({
           Please keep this page open.
         </p>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

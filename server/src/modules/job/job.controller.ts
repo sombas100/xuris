@@ -5,21 +5,41 @@ import { jobService } from "./job.service";
 const service = jobService();
 
 export const jobController = () => {
-    const createJobPost = asyncHandler(async (req, res) => {
-        const userId = req.user!.id;        
-        const createdJob = await service.createJobPost(req.body, userId)
+  const createJobPostFromText = asyncHandler(async (req, res) => {
+    const userId = req.user!.id;
 
-        return successResponse(res, createdJob, 201);
-    })
+    const extractedJob = await service.createJobPostFromText(
+      req.body,
+      userId,
+    );
 
-    const createJobPostFromText = asyncHandler(async (req, res) => {
-        const userId = req.user!.id;
+    return successResponse(res, extractedJob, 201);
+  });
 
-        const extractedJob = await service.createJobPostFromText(req.body, userId);
+  const getCurrentUserJobPosts = asyncHandler(async (req, res) => {
+    const userId = req.user!.id;
 
-        return successResponse(res, extractedJob, 201)
-    })
+    const jobPosts =
+      await service.getCurrentUserJobPosts(userId);
 
+    return successResponse(res, jobPosts, 200);
+  });
 
-    return { createJobPost, createJobPostFromText }
-}
+  const getJobPostById = asyncHandler(async (req, res) => {
+    const userId = req.user!.id;
+    const jobPostId = String(req.params.jobPostId);
+
+    const jobPost = await service.getJobPost(
+      jobPostId,
+      userId,
+    );
+
+    return successResponse(res, jobPost, 200);
+  });
+
+  return {
+    createJobPostFromText,
+    getCurrentUserJobPosts,
+    getJobPostById,
+  };
+};

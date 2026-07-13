@@ -46,6 +46,7 @@ export const analysisRepository = () => {
                 weaknesses: data.result.riskAreas,
                 improvements: data.result.recommendedResumeChanges,
                 missingKeywords: data.result.missingKeywords,
+                result: data.result,
                 modelUsed: data.modelUsed,
                 promptTokens: data.promptTokens,
                 outputTokens: data.outputTokens,

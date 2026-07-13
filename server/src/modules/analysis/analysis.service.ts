@@ -62,7 +62,7 @@ export const analysisService = () => {
       );
     }
 
-    const jobPost = await jobRepo.retrieveJobPost(jobPostId);
+    const jobPost = await jobRepo.retrieveJobPost(jobPostId, userId);
 
     if (!jobPost) {
       throw new NotFoundError("Job post not found", "JOB_POST_NOT_FOUND");
