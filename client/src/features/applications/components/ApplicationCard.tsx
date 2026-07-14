@@ -1,4 +1,4 @@
-import { BriefcaseBusiness, CalendarDays, MapPin } from "lucide-react";
+import { BriefcaseBusiness, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { buttonVariants } from "@/components/ui/button";
