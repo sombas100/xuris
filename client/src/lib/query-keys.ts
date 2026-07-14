@@ -113,4 +113,24 @@ coverLetters: {
       coverLetterId,
     ] as const,
 },
+
+applications: {
+  all: ["applications"] as const,
+
+  lists: () =>
+    [...queryKeys.applications.all, "list"] as const,
+
+  list: (params: Record<string, unknown>) =>
+    [
+      ...queryKeys.applications.lists(),
+      params,
+    ] as const,
+
+  detail: (applicationId: string) =>
+    [
+      ...queryKeys.applications.all,
+      "detail",
+      applicationId,
+    ] as const,
+},
 } as const;
