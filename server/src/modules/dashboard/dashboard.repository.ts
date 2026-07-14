@@ -1,7 +1,11 @@
-import { AnalysisStatus, AnalysisType } from "../../../generated/prisma/enums";
+import {
+  AnalysisStatus,
+  AnalysisType,
+} from "../../../generated/prisma/enums";
+
 import { prisma } from "../../lib/prisma";
 
-const RECENT_ACTIVITY_LIMIT = 6;
+const RECENT_ACTIVITY_FETCH_LIMIT = 6;
 
 export const dashboardRepository = () => {
   async function getSummaryCounts(userId: string) {
@@ -65,13 +69,82 @@ export const dashboardRepository = () => {
         createdAt: "desc",
       },
 
-      take: RECENT_ACTIVITY_LIMIT,
+      take: RECENT_ACTIVITY_FETCH_LIMIT,
 
       select: {
         id: true,
         type: true,
         overallScore: true,
-        summary: true,
+        createdAt: true,
+
+        resume: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+
+        jobPost: {
+          select: {
+            id: true,
+            title: true,
+            company: true,
+          },
+        },
+      },
+    });
+  }
+
+  async function getRecentInterviewPreps(userId: string) {
+    return prisma.interviewPrep.findMany({
+      where: {
+        userId,
+      },
+
+      orderBy: {
+        createdAt: "desc",
+      },
+
+      take: RECENT_ACTIVITY_FETCH_LIMIT,
+
+      select: {
+        id: true,
+        createdAt: true,
+        difficulty: true,
+
+        resume: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+
+        jobPost: {
+          select: {
+            id: true,
+            title: true,
+            company: true,
+          },
+        },
+      },
+    });
+  }
+
+  async function getRecentCoverLetters(userId: string) {
+    return prisma.coverLetter.findMany({
+      where: {
+        userId,
+      },
+
+      orderBy: {
+        createdAt: "desc",
+      },
+
+      take: RECENT_ACTIVITY_FETCH_LIMIT,
+
+      select: {
+        id: true,
+        title: true,
         createdAt: true,
 
         resume: {
@@ -147,6 +220,8 @@ export const dashboardRepository = () => {
   return {
     getSummaryCounts,
     getRecentAnalyses,
+    getRecentInterviewPreps,
+    getRecentCoverLetters,
     getResumeScoreSummary,
     getLatestResumeAnalysis,
   };

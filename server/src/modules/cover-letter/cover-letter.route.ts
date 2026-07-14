@@ -1,15 +1,27 @@
-import express from 'express';
-import { coverLetterController } from './cover-letter.controller';
-import { requireUser } from '../../middleware/auth';
+import express from "express";
+
+import { coverLetterController } from "./cover-letter.controller";
+import { requireUser } from "../../middleware/auth";
 
 const router = express.Router();
 const controller = coverLetterController();
 
-router.post('/', requireUser, controller.generateCoverLetter);
+router.post(
+  "/",
+  requireUser,
+  controller.generateCoverLetter,
+);
 
-router.get('/:id', controller.getCoverLetterById);
-router.get('/resume/:resumeId', controller.getCoverLettersByResumeId);
-router.get('/job/:jobPostId', controller.getCoverLettersByJobPostId)
+router.get(
+  "/resumes/:resumeId/jobs/:jobPostId",
+  requireUser,
+  controller.getCoverLettersByResumeAndJob,
+);
 
+router.get(
+  "/:coverLetterId",
+  requireUser,
+  controller.getCoverLetterById,
+);
 
 export default router;

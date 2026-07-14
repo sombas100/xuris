@@ -2,6 +2,7 @@ import {
   Bot,
   BriefcaseBusiness,
   CalendarDays,
+  FilePenLine,
   MapPin,
   MessagesSquare,
 } from "lucide-react";
@@ -149,19 +150,33 @@ export function JobComparisonResults({
           </p>
         )}
 
-        <div className="mt-6">
+        <div className="mt-6 flex flex-wrap gap-3">
           <Link
             to={`/dashboard/interview-prep?resumeId=${encodeURIComponent(
               comparison.resumeId,
             )}&jobPostId=${encodeURIComponent(comparison.jobPostId)}`}
             className={cn(
               buttonVariants({
-                variant: "default",
+                variant: "secondaryAction",
               }),
             )}
           >
             <MessagesSquare className="size-4" />
             Prepare for this interview
+          </Link>
+
+          <Link
+            to={`/dashboard/cover-letters?resumeId=${encodeURIComponent(
+              comparison.resumeId,
+            )}&jobPostId=${encodeURIComponent(comparison.jobPostId)}`}
+            className={cn(
+              buttonVariants({
+                variant: "secondaryAction",
+              }),
+            )}
+          >
+            <FilePenLine className="size-4" />
+            Generate cover letter
           </Link>
         </div>
       </section>

@@ -1,6 +1,8 @@
 export type DashboardActivityType =
   | "RESUME_ANALYSIS"
-  | "JOB_COMPARISON";
+  | "JOB_COMPARISON"
+  | "INTERVIEW_PREP"
+  | "COVER_LETTER";
 
 export type DashboardActivity = {
   id: string;

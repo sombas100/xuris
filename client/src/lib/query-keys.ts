@@ -91,4 +91,26 @@ interviewPrep: {
     ] as const,
 },
 
+coverLetters: {
+  all: ["cover-letters"] as const,
+
+  byResumeAndJob: (
+    resumeId: string,
+    jobPostId: string,
+  ) =>
+    [
+      ...queryKeys.coverLetters.all,
+      "resume",
+      resumeId,
+      "job",
+      jobPostId,
+    ] as const,
+
+  detail: (coverLetterId: string) =>
+    [
+      ...queryKeys.coverLetters.all,
+      "detail",
+      coverLetterId,
+    ] as const,
+},
 } as const;

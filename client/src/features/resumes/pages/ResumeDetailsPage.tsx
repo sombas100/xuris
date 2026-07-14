@@ -6,6 +6,7 @@ import {
   Sparkles,
   Trash2,
   MessagesSquare,
+  FilePenLine,
 } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -315,11 +316,11 @@ export function ResumeDetailsPage() {
               </div>
 
               <h2 className="mt-4 text-lg font-semibold text-white">
-                Ai actions
+                Next step
               </h2>
 
               <p className="mt-2 text-sm leading-6 text-white/50">
-                Analyse this resume or compare it with a saved job advert.
+                Continue improving this resume with AI-powered tools.
               </p>
 
               <Button
@@ -334,6 +335,7 @@ export function ResumeDetailsPage() {
 
               <Button
                 type="button"
+                variant={"secondaryAction"}
                 className="mt-3 w-full cursor-pointer"
                 disabled={resume.status !== "EXTRACTED"}
                 onClick={() => {
@@ -350,8 +352,8 @@ export function ResumeDetailsPage() {
 
               <Button
                 type="button"
-                variant="outline"
-                className="mt-3 w-full cursor-pointer"
+                variant="secondaryAction"
+                className=" mt-3 w-full cursor-pointer"
                 disabled={resume.status !== "EXTRACTED"}
                 onClick={() => {
                   navigate(
@@ -363,6 +365,23 @@ export function ResumeDetailsPage() {
               >
                 <MessagesSquare className="size-4" />
                 Prepare for interview
+              </Button>
+
+              <Button
+                type="button"
+                variant="secondaryAction"
+                className={"w-full mt-3 cursor-pointer"}
+                disabled={resume.status !== "EXTRACTED"}
+                onClick={() => {
+                  navigate(
+                    `/dashboard/cover-letters?resumeId=${encodeURIComponent(
+                      resume.id,
+                    )}`,
+                  );
+                }}
+              >
+                <FilePenLine className="size-4" />
+                Generate cover letter
               </Button>
 
               {resume.status !== "EXTRACTED" && (

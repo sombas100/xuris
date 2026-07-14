@@ -10,6 +10,7 @@ import { ResumeDetailsPage } from "@/features/resumes/pages/ResumeDetailsPage";
 import { ResumeAnalysisPage } from "@/features/resume-analysis/pages/ResumeAnalysisPage";
 import { JobComparisonPage } from "@/features/job-comparison/pages/JobComparisonPage";
 import { InterviewPrepPage } from "@/features/interview-prep/pages/InterviewPrepPage";
+import { CoverLettersPage } from "@/features/cover-letters/pages/CoverLetterPages";
 
 const AppRoutes = () => {
   return (
@@ -34,6 +35,7 @@ const AppRoutes = () => {
         <Route path="resume-analysis" element={<ResumeAnalysisPage />} />
         <Route path="job-comparison" element={<JobComparisonPage />} />
         <Route path="interview-prep" element={<InterviewPrepPage />} />
+        <Route path="cover-letters" element={<CoverLettersPage />} />
         {/* <Route path="applications" element={<ApplicationsPage />} /> */}
       </Route>
     </Routes>
