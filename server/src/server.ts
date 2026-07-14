@@ -19,6 +19,7 @@ import coverLetterRoutes from './modules/cover-letter/cover-letter.route.js';
 import interviewPrepRoutes from './modules/interview-prep/interview-prep.route.js';
 import authRoutes from './modules/auth/user.route.js';
 import dashboardRoutes from './modules/dashboard/dashboard.route.js';
+import applicationRoutes from './modules/application/application.route.js'
 
 const app = express();
 const db = database();
@@ -40,6 +41,7 @@ app.use('/api/cover-letters/v1', coverLetterRoutes);
 app.use('/api/interview-prep/v1', interviewPrepRoutes);
 app.use('/api/auth/v1', authRoutes);
 app.use('/api/dashboard/v1', dashboardRoutes);
+app.use('/api/applications/v1', applicationRoutes)
 
 app.get("/health", healthCheck)
 

@@ -52,8 +52,10 @@ enum AnalysisStatus {
 enum ApplicationStatus {
   SAVED
   APPLIED
+  SCREENING
   INTERVIEW
   TECHNICAL_TEST
+  FINAL_INTERVIEW
   OFFER
   REJECTED
   WITHDRAWN
@@ -208,6 +210,8 @@ model CoverLetter {
   jobPostId String?  @map("job_post_id")
   jobPost   JobPost? @relation(fields: [jobPostId], references: [id], onDelete: SetNull)
 
+  applications JobApplication[]
+
   title   String
   content String
   tone    String?
@@ -263,7 +267,8 @@ model InterviewPrep {
 }
 
 model JobApplication {
-  id     String @id @default(cuid())
+  id String @id @default(cuid())
+
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -273,9 +278,12 @@ model JobApplication {
   jobPostId String?  @map("job_post_id")
   jobPost   JobPost? @relation(fields: [jobPostId], references: [id], onDelete: SetNull)
 
+  coverLetterId String?      @map("cover_letter_id")
+  coverLetter   CoverLetter? @relation(fields: [coverLetterId], references: [id], onDelete: SetNull)
+
   company  String
   role     String
-  jobUrl   String?
+  jobUrl   String? @map("job_url")
   location String?
   salary   String?
   notes    String?
@@ -285,13 +293,38 @@ model JobApplication {
   appliedAt    DateTime? @map("applied_at")
   interviewAt  DateTime? @map("interview_at")
   followUpDate DateTime? @map("follow_up_date")
+  offerAt      DateTime? @map("offer_at")
+  closedAt     DateTime? @map("closed_at")
+
+  statusHistory ApplicationStatusHistory[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([userId])
-  @@index([status])
+  @@index([userId, status])
+  @@index([userId, createdAt])
+  @@index([jobPostId])
+  @@index([followUpDate])
   @@map("job_applications")
+}
+
+model ApplicationStatusHistory {
+  id String @id @default(cuid())
+
+  applicationId String         @map("application_id")
+  application   JobApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  fromStatus ApplicationStatus? @map("from_status")
+  toStatus   ApplicationStatus  @map("to_status")
+
+  note String?
+
+  changedAt DateTime @default(now()) @map("changed_at")
+
+  @@index([applicationId])
+  @@index([applicationId, changedAt])
+  @@map("application_status_history")
 }
 
 model Subscription {

@@ -46,6 +46,13 @@ export const coverLetterRepository = () => {
         id,
         userId,
       },
+      select: {
+      id: true,
+      resumeId: true,
+      jobPostId: true,
+      title: true,
+      tone: true,
+    },
     });
   }
 
