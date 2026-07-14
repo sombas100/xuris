@@ -115,6 +115,7 @@ export const analysisService = () => {
     return analysisRepo.getJobMatchAnalysesByResumeId(resumeId, userId);
   }
 
+  
 
   return {
     createJobMatchAnalysis,

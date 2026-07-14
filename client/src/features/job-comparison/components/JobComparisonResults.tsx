@@ -1,6 +1,15 @@
-import { Bot, BriefcaseBusiness, CalendarDays, MapPin } from "lucide-react";
+import {
+  Bot,
+  BriefcaseBusiness,
+  CalendarDays,
+  MapPin,
+  MessagesSquare,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
+import { buttonVariants } from "@/components/ui/button";
 import type { JobPost } from "@/features/job-posts/job-post.types";
+import { cn } from "@/lib/utils";
 
 import { JobComparisonList } from "./JobComparisonList";
 import type {
@@ -139,6 +148,22 @@ export function JobComparisonResults({
             {result.summary}
           </p>
         )}
+
+        <div className="mt-6">
+          <Link
+            to={`/dashboard/interview-prep?resumeId=${encodeURIComponent(
+              comparison.resumeId,
+            )}&jobPostId=${encodeURIComponent(comparison.jobPostId)}`}
+            className={cn(
+              buttonVariants({
+                variant: "default",
+              }),
+            )}
+          >
+            <MessagesSquare className="size-4" />
+            Prepare for this interview
+          </Link>
+        </div>
       </section>
 
       <div className="grid gap-6 lg:grid-cols-2">

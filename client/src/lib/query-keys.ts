@@ -68,4 +68,27 @@ export const queryKeys = {
     [...queryKeys.dashboard.all, "summary"] as const,
 },
 
+interviewPrep: {
+  all: ["interview-prep"] as const,
+
+  byResumeAndJob: (
+    resumeId: string,
+    jobPostId: string,
+  ) =>
+    [
+      ...queryKeys.interviewPrep.all,
+      "resume",
+      resumeId,
+      "job",
+      jobPostId,
+    ] as const,
+
+  detail: (interviewPrepId: string) =>
+    [
+      ...queryKeys.interviewPrep.all,
+      "detail",
+      interviewPrepId,
+    ] as const,
+},
+
 } as const;

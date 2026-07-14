@@ -23,7 +23,7 @@ export const interviewPrepService = () => {
         resumeId: string,
         jobPostId: string
     }) {
-        const resume = await resumeRepo.retrieveResume(resumeId);
+        const resume = await resumeRepo.retrieveResume(resumeId, userId);
 
         if (!resume)
             throw new NotFoundError('Resume not found', 'RESUME_NOT_FOUND');
@@ -35,12 +35,12 @@ export const interviewPrepService = () => {
             );
         }
 
-        const jobPost = await jobRepo.retrieveJobPost(jobPostId);
+        const jobPost = await jobRepo.retrieveJobPost(jobPostId, userId);
 
         if (!jobPost)
             throw new NotFoundError('Job post not found', 'JOB_POST_NOT_FOUND');
 
-        const latestJobMatch = await analysisRepo.getLatestJobMatch(resumeId, jobPostId)
+        const latestJobMatch = await analysisRepo.getLatestJobMatch(resumeId, jobPostId, userId)
 
         const aiResponse = await ai.generateInterviewPrep({
             resumeText: resume.extractedText,
@@ -66,8 +66,46 @@ export const interviewPrepService = () => {
             weaknessAreas: aiResponse.result.weaknessAreas,
             questionsToAsk: aiResponse.result.questionsToAsk,
             tips: aiResponse.result.tips,
+            modelUsed: aiResponse.usage.modelUsed,
+            promptTokens: aiResponse.usage.promptTokens,
+            outputTokens: aiResponse.usage.outputTokens,
+            totalTokens: aiResponse.usage.totalTokens,
         })
     }
 
-    return { createInterviewPrep }
+    async function getInterviewPrepById(
+  interviewPrepId: string,
+  userId: string,
+) {
+  const interviewPrep =
+    await repository.getInterviewPrepById(
+      interviewPrepId,
+      userId,
+    );
+
+  if (!interviewPrep) {
+    throw new NotFoundError(
+      "Interview preparation not found",
+      "INTERVIEW_PREP_NOT_FOUND",
+    );
+  }
+
+  return interviewPrep;
+}
+
+    async function getInterviewPrepsByResumeAndJob(
+        resumeId: string,
+        jobPostId: string,
+        userId: string,
+    ) {
+        return repository.getInterviewPrepsByResumeAndJob(
+        resumeId,
+        jobPostId,
+        userId,
+     );
+}
+
+
+
+    return { createInterviewPrep, getInterviewPrepById, getInterviewPrepsByResumeAndJob }
 }

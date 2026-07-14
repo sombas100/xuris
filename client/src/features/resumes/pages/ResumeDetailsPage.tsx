@@ -5,6 +5,7 @@ import {
   Scale,
   Sparkles,
   Trash2,
+  MessagesSquare,
 } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
@@ -345,6 +346,23 @@ export function ResumeDetailsPage() {
               >
                 <Scale className="size-4" />
                 Compare with a job
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                className="mt-3 w-full cursor-pointer"
+                disabled={resume.status !== "EXTRACTED"}
+                onClick={() => {
+                  navigate(
+                    `/dashboard/interview-prep?resumeId=${encodeURIComponent(
+                      resume.id,
+                    )}`,
+                  );
+                }}
+              >
+                <MessagesSquare className="size-4" />
+                Prepare for interview
               </Button>
 
               {resume.status !== "EXTRACTED" && (

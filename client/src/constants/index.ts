@@ -41,7 +41,7 @@ export const dashboardLinks = [
     icon: FilePenLine,
   },
   {
-    name: "Interview prep",
+    name: "Interview preparation",
     href: "/dashboard/interview-prep",
     icon: MessagesSquare,
   },
