@@ -75,7 +75,7 @@ const DashboardHeader = () => {
   }
 
   return (
-    <header className="sticky top-4 z-40 px-4 lg:px-6">
+    <header className="sticky top-4 z-10 px-4 lg:px-6">
       <div className="relative mx-auto">
         <div className="flex h-16 items-center justify-between rounded-3xl border border-white/10 bg-black/40 px-4 shadow-xl backdrop-blur-xl sm:px-5">
           <div className="min-w-0">
@@ -90,7 +90,8 @@ const DashboardHeader = () => {
           </div>
 
           <div className="hidden items-center justify-center gap-4 lg:flex lg:gap-6">
-            <button
+            <Link
+              to={"/"}
               type="button"
               className="
                 cursor-pointer
@@ -111,8 +112,8 @@ const DashboardHeader = () => {
                 hover:shadow-[0_0_20px_rgba(204,93,232,0.2)]
               "
             >
-              Account
-            </button>
+              Home
+            </Link>
 
             <UserButton />
           </div>

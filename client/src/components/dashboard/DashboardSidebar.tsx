@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { dashboardLinks } from "@/constants/index";
-import logo from "../../../public/xuris-logo-dark.png";
+import logo from "../../../public/xuris-logo-dark-no-bg.png";
 
 const DashboardSidebar = () => {
   const location = useLocation();

@@ -1,5 +1,10 @@
 import Hero from "@/components/landing/Hero";
 import Navbar from "../Navbar";
+import Footer from "@/Footer";
+import DashboardShowcase from "@/components/dashboard/DashboardShowcase";
+import FeaturesSection from "@/components/landing/FeaturesSection";
+import HowItWorksSection from "@/components/landing/HowItWorksSection";
+import PricingSection from "@/components/landing/PricingSection";
 
 export function LandingPage() {
   return (
@@ -15,6 +20,15 @@ export function LandingPage() {
 
         <Hero />
       </section>
+      <DashboardShowcase />
+
+      <FeaturesSection />
+
+      <HowItWorksSection />
+
+      <PricingSection />
+
+      <Footer />
     </main>
   );
 }
