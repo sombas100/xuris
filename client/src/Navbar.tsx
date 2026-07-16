@@ -32,7 +32,7 @@ const Navbar = () => {
         >
           <img className="size-10 mt-2 object-contain" src={logo} alt="Xuris" />
 
-          <span className="text-2xl font-semibold tracking-wide sm:text-3xl">
+          <span className="text-xl font-semibold tracking-wide sm:text-3xl">
             Xuris
           </span>
         </Link>
@@ -96,7 +96,7 @@ const Navbar = () => {
           aria-label={mobileMenuOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={mobileMenuOpen}
           onClick={() => setMobileMenuOpen((current) => !current)}
-          className="flex size-10 items-center justify-center rounded-xl border border-white/10 bg-white/3 text-white transition-colors hover:border-primary/25 hover:bg-primary/[0.08] lg:hidden"
+          className="flex size-10 items-center justify-center rounded-xl border border-white/10 bg-white/3 text-white transition-colors hover:border-primary/25 hover:bg-primary/8 lg:hidden"
         >
           {mobileMenuOpen ? (
             <X className="size-5" />

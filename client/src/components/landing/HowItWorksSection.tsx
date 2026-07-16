@@ -41,9 +41,9 @@ const HowItWorksSection = () => {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10"
       >
-        <div className="absolute left-1/2 top-1/2 size-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[170px]" />
+        <div className="absolute left-1/2 top-1/2 size-125 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[170px]" />
 
-        <div className="absolute -left-24 top-1/3 size-64 rounded-full bg-white/[0.03] blur-[120px]" />
+        <div className="absolute -left-24 top-1/3 size-64 rounded-full bg-white/3 blur-[120px]" />
       </div>
 
       <div className="mx-auto w-full max-w-7xl">
@@ -79,7 +79,7 @@ const HowItWorksSection = () => {
                   key={step.number}
                   className="group relative flex flex-col items-center text-center"
                 >
-                  <div className="relative z-10 flex size-18 items-center justify-center rounded-full border border-primary/20 bg-background shadow-[0_0_40px_rgba(204,93,232,0.08)] transition-all duration-300 group-hover:border-primary/40 group-hover:bg-primary/[0.08] group-hover:shadow-[0_0_45px_rgba(204,93,232,0.16)]">
+                  <div className="relative z-10 flex size-18 items-center justify-center rounded-full border border-primary/20 bg-background shadow-[0_0_40px_rgba(204,93,232,0.08)] transition-all duration-300 group-hover:border-primary/40 group-hover:bg-primary/8 group-hover:shadow-[0_0_45px_rgba(204,93,232,0.16)]">
                     <Icon className="size-6 text-primary" />
                   </div>
 
@@ -115,11 +115,11 @@ const HowItWorksSection = () => {
                 key={step.number}
                 className="group relative grid grid-cols-[3rem_minmax(0,1fr)] gap-4"
               >
-                <div className="relative z-10 flex size-12 items-center justify-center rounded-full border border-primary/20 bg-background shadow-lg shadow-primary/5 transition-colors group-hover:border-primary/40 group-hover:bg-primary/[0.08]">
+                <div className="relative z-10 flex size-12 items-center justify-center rounded-full border border-primary/20 bg-background shadow-lg shadow-primary/5 transition-colors group-hover:border-primary/40 group-hover:bg-primary/8">
                   <Icon className="size-5 text-primary" />
                 </div>
 
-                <div className="rounded-3xl border border-white/10 bg-white/[0.025] p-5 backdrop-blur-xl transition-all duration-300 group-hover:border-primary/20 group-hover:bg-primary/[0.035]">
+                <div className="rounded-3xl border border-white/10 bg-white/2.5 p-5 backdrop-blur-xl transition-all duration-300 group-hover:border-primary/20 group-hover:bg-primary/[0.035]">
                   <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
                     Step {step.number}
                   </span>

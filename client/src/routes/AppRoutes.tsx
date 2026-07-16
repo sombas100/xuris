@@ -14,12 +14,26 @@ import { CoverLettersPage } from "@/features/cover-letters/pages/CoverLetterPage
 import { ApplicationsPage } from "@/features/applications/pages/ApplicationsPage";
 import { ApplicationDetailsPage } from "@/features/applications/pages/ApplicationDetailsPage";
 
+import { AboutPage } from "@/pages/about-page";
+import { ContactPage } from "@/pages/contact-page";
+import { FAQPage } from "@/pages/faq-page";
+import { PricingPage } from "@/pages/pricing-page";
+import { PrivacyPage } from "@/pages/privacy-page";
+import { TermsPage } from "@/pages/terms-page";
+
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/sign-in/*" element={<SignInPage />} />
       <Route path="/sign-up/*" element={<SignUpPage />} />
+      <Route path="/pricing" element={<PricingPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/faq" element={<FAQPage />} />
+
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/contact" element={<ContactPage />} />
 
       <Route
         path="/dashboard"

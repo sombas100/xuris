@@ -1,7 +1,7 @@
 export const navLinks = [
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'About', href: '/about'},
-    { name: 'FAQ', href: '/faq' },
+    { name: 'Pricing', href: 'pricing' },
+    { name: 'About', href: 'about'},
+    { name: 'FAQ', href: 'faq' },
 ]
 
 import {

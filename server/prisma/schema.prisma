@@ -19,11 +19,15 @@ enum Plan {
 }
 
 enum SubscriptionStatus {
-  ACTIVE
   INACTIVE
-  CANCELLED
-  PAST_DUE
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
   TRIALING
+  ACTIVE
+  PAST_DUE
+  UNPAID
+  PAUSED
+  CANCELED
 }
 
 enum ResumeStatus {
@@ -65,6 +69,13 @@ enum InterviewDifficulty {
   BEGINNER
   INTERMEDIATE
   ADVANCED
+}
+
+enum UsageType {
+  RESUME_ANALYSIS
+  JOB_COMPARISON
+  INTERVIEW_PREP
+  COVER_LETTER
 }
 
 model User {
@@ -347,21 +358,27 @@ model Subscription {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([userId])
+  @@index([stripeCustomerId])
+  @@index([userId, status])
+  @@map("subscriptions")
 }
 
 model UsageEvent {
-  id     String @id @default(cuid())
+  id String @id @default(cuid())
+
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  type AnalysisType
+  type UsageType
 
-  tokensUsed Int? @map("tokens_used")
-  costCents  Int? @map("cost_cents")
+  resourceId String? @map("resource_id")
+  tokensUsed Int?    @map("tokens_used")
+  costCents  Int?    @map("cost_cents")
 
   createdAt DateTime @default(now()) @map("created_at")
 
   @@index([userId])
+  @@index([userId, type])
   @@index([createdAt])
   @@map("usage_events")
 }
