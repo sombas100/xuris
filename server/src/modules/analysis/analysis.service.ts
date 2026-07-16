@@ -4,90 +4,174 @@ import { jobRepository } from "../job/job.repository";
 import { aiService } from "../ai/ai.service";
 import { NotFoundError } from "../../errors/NotFoundError";
 import { BadRequestError } from "../../errors/BadRequestError";
+import { UsageType } from "../../../generated/prisma/enums";
+import { usageService } from "../usage/usage.service";
 
 const resumeRepo = resumeRepository();
 const analysisRepo = analysisRepository();
 const jobRepo = jobRepository();
 const ai = aiService();
+const usage = usageService();
 
 export const analysisService = () => {
-  async function analyseResume(resumeId: string, userId: string) {
-    const resume = await resumeRepo.retrieveResume(resumeId, userId);
-
-    if (!resume) {
-      throw new NotFoundError("Resume not found", "RESUME_NOT_FOUND");
-    }
-
-    if (!resume.extractedText) {
-      throw new BadRequestError(
-        "Resume text has not been extracted yet",
-        "RESUME_TEXT_NOT_EXTRACTED"
-      );
-    }
-
-    const aiResponse = await ai.analyzeResume(resume.extractedText);
-
-    const savedAnalysis = await analysisRepo.createResumeAnalysis({
-      userId,
+  async function analyseResume(
+  resumeId: string,
+  userId: string,
+) {
+  const resume =
+    await resumeRepo.retrieveResume(
       resumeId,
-      result: aiResponse.result,
-      modelUsed: aiResponse.usage.modelUsed,
-      promptTokens: aiResponse.usage.promptTokens,
-      outputTokens: aiResponse.usage.outputTokens,
-      totalTokens: aiResponse.usage.totalTokens,
-    });
+      userId,
+    );
 
-    return savedAnalysis;
+  if (!resume) {
+    throw new NotFoundError(
+      "Resume not found",
+      "RESUME_NOT_FOUND",
+    );
   }
 
-  async function createJobMatchAnalysis({
-    userId,
-    resumeId,
-    jobPostId,
-  }: {
-    userId: string;
-    resumeId: string;
-    jobPostId: string;
-  }) {
-    const resume = await resumeRepo.retrieveResume(resumeId, userId);
+  if (!resume.extractedText) {
+    throw new BadRequestError(
+      "Resume text has not been extracted yet",
+      "RESUME_TEXT_NOT_EXTRACTED",
+    );
+  }
 
-    if (!resume) {
-      throw new NotFoundError("Resume not found", "RESUME_NOT_FOUND");
-    }
+  const reservation =
+    await usage.reserveUsage(userId);
 
-    if (!resume.extractedText) {
-      throw new BadRequestError(
-        "Resume text has not been extracted yet",
-        "RESUME_TEXT_NOT_EXTRACTED"
+  let aiResponse;
+
+  try {
+    aiResponse =
+      await ai.analyzeResume(
+        resume.extractedText,
       );
-    }
+  } catch (error) {
+    await usage.releaseUsage(reservation);
+    throw error;
+  }
 
-    const jobPost = await jobRepo.retrieveJobPost(jobPostId, userId);
+  const savedAnalysis =
+    await analysisRepo.createResumeAnalysis({
+      userId,
+      resumeId,
 
-    if (!jobPost) {
-      throw new NotFoundError("Job post not found", "JOB_POST_NOT_FOUND");
-    }
+      result: aiResponse.result,
 
-    const aiResponse = await ai.matchResumeToJob({
-      resumeText: resume.extractedText,
-      jobTitle: jobPost.title,
-      company: jobPost.company,
-      jobDescription: jobPost.description,
-      requirements: jobPost.requirements,
-      responsibilities: jobPost.responsibilities,
+      modelUsed:
+        aiResponse.usage.modelUsed,
+
+      promptTokens:
+        aiResponse.usage.promptTokens,
+
+      outputTokens:
+        aiResponse.usage.outputTokens,
+
+      totalTokens:
+        aiResponse.usage.totalTokens,
     });
 
-    return analysisRepo.createResumeJobMatchAnalysis({
+  await usage.recordUsage({
+    userId,
+    type: UsageType.RESUME_ANALYSIS,
+
+    resourceId: savedAnalysis.id,
+
+    tokensUsed:
+      aiResponse.usage.totalTokens,
+  });
+
+  return savedAnalysis;
+}
+
+  async function createJobMatchAnalysis({
+  userId,
+  resumeId,
+  jobPostId,
+}: {
+  userId: string;
+  resumeId: string;
+  jobPostId: string;
+}) {
+  const resume = await resumeRepo.retrieveResume(
+    resumeId,
+    userId,
+  );
+
+  if (!resume) {
+    throw new NotFoundError(
+      "Resume not found",
+      "RESUME_NOT_FOUND",
+    );
+  }
+
+  if (!resume.extractedText) {
+    throw new BadRequestError(
+      "Resume text has not been extracted yet",
+      "RESUME_TEXT_NOT_EXTRACTED",
+    );
+  }
+
+  const jobPost = await jobRepo.retrieveJobPost(
+    jobPostId,
+    userId,
+  );
+
+  if (!jobPost) {
+    throw new NotFoundError(
+      "Job post not found",
+      "JOB_POST_NOT_FOUND",
+    );
+  }
+
+  const reservation =
+    await usage.reserveUsage(userId);
+
+  let aiResponse;
+
+  try {
+    aiResponse =
+      await ai.matchResumeToJob({
+        resumeText: resume.extractedText,
+        jobTitle: jobPost.title,
+        company: jobPost.company,
+        jobDescription: jobPost.description,
+        requirements: jobPost.requirements,
+        responsibilities:
+          jobPost.responsibilities,
+      });
+  } catch (error) {
+    await usage.releaseUsage(reservation);
+    throw error;
+  }
+
+  const analysis =
+    await analysisRepo.createResumeJobMatchAnalysis({
       userId,
       resumeId,
       jobPostId,
       result: aiResponse.result,
       modelUsed: aiResponse.usage.modelUsed,
-      promptTokens: aiResponse.usage.promptTokens,
-      outputTokens: aiResponse.usage.outputTokens,
-      totalTokens: aiResponse.usage.totalTokens,
+      promptTokens:
+        aiResponse.usage.promptTokens,
+      outputTokens:
+        aiResponse.usage.outputTokens,
+      totalTokens:
+        aiResponse.usage.totalTokens,
     });
-  }
+
+  await usage.recordUsage({
+    userId,
+    type: UsageType.JOB_COMPARISON,
+    resourceId: analysis.id,
+    tokensUsed:
+      aiResponse.usage.totalTokens,
+  });
+
+  return analysis;
+}
 
   async function getAnalysisById(id: string, userId: string) {
     const analysis = await analysisRepo.getAnalysisById(id, userId);

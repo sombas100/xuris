@@ -22,6 +22,7 @@ import dashboardRoutes from './modules/dashboard/dashboard.route.js';
 import applicationRoutes from './modules/application/application.route.js'
 import { stripeWebhookHandler,} from "./modules/billing/stripe-webhook.controller.js";
 import billingRoutes from "./modules/billing/billing.route.js";
+import usageRoute from './modules/usage/usage.route.js';
 
 
 const app = express();
@@ -48,6 +49,8 @@ app.use('/api/auth/v1', authRoutes);
 app.use('/api/dashboard/v1', dashboardRoutes);
 app.use('/api/applications/v1', applicationRoutes)
 app.use("/api/billing/v1", billingRoutes);
+app.use('/api/usage/v1', usageRoute)
+
 
 app.get("/health", healthCheck)
 

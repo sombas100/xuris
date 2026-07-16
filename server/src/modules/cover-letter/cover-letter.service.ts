@@ -1,9 +1,12 @@
 import { BadRequestError } from "../../errors/BadRequestError";
 import { NotFoundError } from "../../errors/NotFoundError";
 
+import { UsageType } from "../../../generated/prisma/enums";
+
 import { aiService } from "../ai/ai.service";
 import { jobRepository } from "../job/job.repository";
 import { resumeRepository } from "../resume/resume.repository";
+import { usageService } from "../usage/usage.service";
 
 import { coverLetterRepository } from "./cover-letter.repository";
 import type { CreateCoverLetterInput } from "./cover-letter.validation";
@@ -12,6 +15,7 @@ const ai = aiService();
 const resumeRepo = resumeRepository();
 const jobRepo = jobRepository();
 const repository = coverLetterRepository();
+const usage = usageService();
 
 export const coverLetterService = () => {
   async function createTailoredCoverLetter(
@@ -51,27 +55,48 @@ export const coverLetterService = () => {
       );
     }
 
-    const aiResponse = await ai.generateCoverLetter({
-      resumeText: resume.extractedText,
-      jobTitle: jobPost.title,
-      company: jobPost.company,
-      jobDescription: jobPost.description,
-      requirements: jobPost.requirements,
-      responsibilities: jobPost.responsibilities,
+    const reservation =
+      await usage.reserveUsage(userId);
+
+    let aiResponse;
+
+    try {
+      aiResponse = await ai.generateCoverLetter({
+        resumeText: resume.extractedText,
+        jobTitle: jobPost.title,
+        company: jobPost.company,
+        jobDescription: jobPost.description,
+        requirements: jobPost.requirements,
+        responsibilities: jobPost.responsibilities,
+      });
+    } catch (error) {
+      await usage.releaseUsage(reservation);
+
+      throw error;
+    }
+
+    const savedCoverLetter =
+      await repository.createCoverLetter({
+        userId,
+        resumeId,
+        jobPostId,
+        title: aiResponse.result.title,
+        content: aiResponse.result.content,
+        tone: aiResponse.result.tone,
+        modelUsed: aiResponse.usage.modelUsed,
+        promptTokens: aiResponse.usage.promptTokens,
+        outputTokens: aiResponse.usage.outputTokens,
+        totalTokens: aiResponse.usage.totalTokens,
+      });
+
+    await usage.recordUsage({
+      userId,
+      type: UsageType.COVER_LETTER,
+      resourceId: savedCoverLetter.id,
+      tokensUsed: aiResponse.usage.totalTokens,
     });
 
-    return repository.createCoverLetter({
-      userId,
-      resumeId,
-      jobPostId,
-      title: aiResponse.result.title,
-      content: aiResponse.result.content,
-      tone: aiResponse.result.tone,
-      modelUsed: aiResponse.usage.modelUsed,
-      promptTokens: aiResponse.usage.promptTokens,
-      outputTokens: aiResponse.usage.outputTokens,
-      totalTokens: aiResponse.usage.totalTokens,
-    });
+    return savedCoverLetter;
   }
 
   async function getCoverLetterById(
