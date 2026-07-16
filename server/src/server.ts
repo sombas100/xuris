@@ -20,12 +20,17 @@ import interviewPrepRoutes from './modules/interview-prep/interview-prep.route.j
 import authRoutes from './modules/auth/user.route.js';
 import dashboardRoutes from './modules/dashboard/dashboard.route.js';
 import applicationRoutes from './modules/application/application.route.js'
+import { stripeWebhookHandler,} from "./modules/billing/stripe-webhook.controller.js";
+import billingRoutes from "./modules/billing/billing.route.js";
+
 
 const app = express();
 const db = database();
 
 app.set('trust proxy', 1);
 app.use(helmet());
+app.post("/api/billing/v1/webhook",
+  express.raw({ type: "application/json", }), stripeWebhookHandler);
 app.use(clerkMiddleware());
 app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
 app.use(express.json({ limit: '1mb' }));
@@ -42,6 +47,7 @@ app.use('/api/interview-prep/v1', interviewPrepRoutes);
 app.use('/api/auth/v1', authRoutes);
 app.use('/api/dashboard/v1', dashboardRoutes);
 app.use('/api/applications/v1', applicationRoutes)
+app.use("/api/billing/v1", billingRoutes);
 
 app.get("/health", healthCheck)
 

@@ -27,7 +27,7 @@ enum SubscriptionStatus {
   PAST_DUE
   UNPAID
   PAUSED
-  CANCELED
+  CANCELLED
 }
 
 enum ResumeStatus {
@@ -79,12 +79,13 @@ enum UsageType {
 }
 
 model User {
-  id        String  @id @default(cuid())
-  clerkId   String  @unique @map("clerk_id")
-  email     String  @unique
-  firstName String? @map("first_name")
-  lastName  String? @map("last_name")
-  imageUrl  String? @map("image_url")
+  id               String  @id @default(cuid())
+  clerkId          String  @unique @map("clerk_id")
+  stripeCustomerId String? @unique @map("stripe_customer_id")
+  email            String  @unique
+  firstName        String? @map("first_name")
+  lastName         String? @map("last_name")
+  imageUrl         String? @map("image_url")
 
   plan              Plan      @default(FREE)
   monthlyUsageLimit Int       @default(5) @map("monthly_usage_limit")
@@ -343,7 +344,6 @@ model Subscription {
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  stripeCustomerId     String? @map("stripe_customer_id")
   stripeSubscriptionId String? @unique @map("stripe_subscription_id")
   stripePriceId        String? @map("stripe_price_id")
 
@@ -358,9 +358,7 @@ model Subscription {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([userId])
-  @@index([stripeCustomerId])
   @@index([userId, status])
-  @@map("subscriptions")
 }
 
 model UsageEvent {
@@ -381,4 +379,17 @@ model UsageEvent {
   @@index([userId, type])
   @@index([createdAt])
   @@map("usage_events")
+}
+
+model StripeWebhookEvent {
+  id String @id @default(cuid())
+
+  stripeEventId String @unique @map("stripe_event_id")
+  type          String
+
+  processedAt DateTime @default(now()) @map("processed_at")
+
+  @@index([type])
+  @@index([processedAt])
+  @@map("stripe_webhook_events")
 }
