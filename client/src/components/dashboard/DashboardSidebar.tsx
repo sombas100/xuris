@@ -1,9 +1,15 @@
 import { Link, useLocation } from "react-router-dom";
+
 import { dashboardLinks } from "@/constants/index";
+import { PlanBadge } from "@/features/billing/components/PlanBadge";
+import { useBillingStatus } from "@/features/billing/hooks/use-billing-status";
+
 import logo from "../../../public/xuris-logo-dark-no-bg.png";
 
 const DashboardSidebar = () => {
   const location = useLocation();
+
+  const { data: billing, isPending: isBillingPending } = useBillingStatus();
 
   const isActiveLink = (href: string) => {
     if (href === "/dashboard") {
@@ -12,6 +18,8 @@ const DashboardSidebar = () => {
 
     return location.pathname.startsWith(href);
   };
+
+  const billingActive = location.pathname.startsWith("/dashboard/billing");
 
   return (
     <aside
@@ -46,7 +54,8 @@ const DashboardSidebar = () => {
         >
           <img
             src={logo}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-lg font-semibold text-primary"
+            alt="Xuris"
+            className="h-10 w-10 shrink-0 object-contain"
           />
 
           <span
@@ -136,27 +145,55 @@ const DashboardSidebar = () => {
       </nav>
 
       <div className="border-t border-white/10 p-3">
-        <div
-          className="
+        <Link
+          to="/dashboard/billing"
+          title="Profile and billing"
+          className={`
+            relative
             flex
-            min-h-14
+            min-h-16
             items-center
             gap-3
             overflow-hidden
             rounded-2xl
             border
-            border-primary/20
-            bg-primary/5
             px-3
-          "
+            transition-all
+            duration-200
+            ${
+              billingActive
+                ? "border-primary/30 bg-primary/10"
+                : "border-primary/20 bg-primary/5 hover:border-primary/35 hover:bg-primary/8"
+            }
+          `}
         >
+          {billingActive && (
+            <span
+              className="
+                absolute
+                inset-y-4
+                left-0
+                w-px
+                rounded-full
+                bg-primary
+                shadow-[0_0_10px_rgba(204,93,232,0.9)]
+              "
+            />
+          )}
+
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/15 text-sm font-semibold text-primary">
-            C
+            X
           </div>
 
           <div
             className="
+              flex
               w-0
+              min-w-0
+              flex-1
+              items-center
+              justify-between
+              gap-3
               overflow-hidden
               whitespace-nowrap
               opacity-0
@@ -166,10 +203,23 @@ const DashboardSidebar = () => {
               group-hover:opacity-100
             "
           >
-            <p className="text-sm font-medium text-white">Xuris account</p>
-            <p className="text-xs text-white/40">Profile and billing</p>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-medium text-white">
+                Xuris account
+              </p>
+
+              <p className="mt-0.5 truncate text-xs text-white/40">
+                Profile and billing
+              </p>
+            </div>
+
+            {isBillingPending ? (
+              <div className="h-6 w-14 shrink-0 animate-pulse rounded-full bg-white/5" />
+            ) : billing ? (
+              <PlanBadge plan={billing.plan} />
+            ) : null}
           </div>
-        </div>
+        </Link>
       </div>
     </aside>
   );

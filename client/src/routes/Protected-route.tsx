@@ -1,3 +1,4 @@
+import { ProtectedRouteLoading } from "@/components/loading/ProtectedRouteLoading";
 import { RedirectToSignIn, useAuth } from "@clerk/clerk-react";
 import type { ReactNode } from "react";
 
@@ -9,7 +10,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { isLoaded, isSignedIn } = useAuth();
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <ProtectedRouteLoading />;
   }
 
   if (!isSignedIn) {

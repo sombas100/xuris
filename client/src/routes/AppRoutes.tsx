@@ -20,6 +20,8 @@ import { FAQPage } from "@/pages/faq-page";
 import { PricingPage } from "@/pages/pricing-page";
 import { PrivacyPage } from "@/pages/privacy-page";
 import { TermsPage } from "@/pages/terms-page";
+import { BillingPage } from "@/features/billing/pages/BillingPage";
+import { CheckoutCancelledPage } from "@/features/billing/pages/CheckoutCancelledPage";
 
 const AppRoutes = () => {
   return (
@@ -53,6 +55,8 @@ const AppRoutes = () => {
         <Route path="interview-prep" element={<InterviewPrepPage />} />
         <Route path="cover-letters" element={<CoverLettersPage />} />
         <Route path="applications" element={<ApplicationsPage />} />
+        <Route path="billing" element={<BillingPage />} />
+        <Route path="billing/cancelled" element={<CheckoutCancelledPage />} />
         <Route
           path="applications/:applicationId"
           element={<ApplicationDetailsPage />}

@@ -62,75 +62,89 @@ export const queryKeys = {
   },
 
   dashboard: {
-  all: ["dashboard"] as const,
+    all: ["dashboard"] as const,
 
-  summary: () =>
-    [...queryKeys.dashboard.all, "summary"] as const,
-},
+    summary: () =>
+      [...queryKeys.dashboard.all, "summary"] as const,
+  },
 
-interviewPrep: {
-  all: ["interview-prep"] as const,
+  billing: {
+    all: ["billing"] as const,
 
-  byResumeAndJob: (
-    resumeId: string,
-    jobPostId: string,
-  ) =>
-    [
-      ...queryKeys.interviewPrep.all,
-      "resume",
-      resumeId,
-      "job",
-      jobPostId,
-    ] as const,
+    status: () =>
+      [...queryKeys.billing.all, "status"] as const,
+  },
 
-  detail: (interviewPrepId: string) =>
-    [
-      ...queryKeys.interviewPrep.all,
-      "detail",
-      interviewPrepId,
-    ] as const,
-},
+  usage: {
+    all: ["usage"] as const,
 
-coverLetters: {
-  all: ["cover-letters"] as const,
+    summary: () =>
+      [...queryKeys.usage.all, "summary"] as const,
+  },
 
-  byResumeAndJob: (
-    resumeId: string,
-    jobPostId: string,
-  ) =>
-    [
-      ...queryKeys.coverLetters.all,
-      "resume",
-      resumeId,
-      "job",
-      jobPostId,
-    ] as const,
+  interviewPrep: {
+    all: ["interview-prep"] as const,
 
-  detail: (coverLetterId: string) =>
-    [
-      ...queryKeys.coverLetters.all,
-      "detail",
-      coverLetterId,
-    ] as const,
-},
+    byResumeAndJob: (
+      resumeId: string,
+      jobPostId: string,
+    ) =>
+      [
+        ...queryKeys.interviewPrep.all,
+        "resume",
+        resumeId,
+        "job",
+        jobPostId,
+      ] as const,
 
-applications: {
-  all: ["applications"] as const,
+    detail: (interviewPrepId: string) =>
+      [
+        ...queryKeys.interviewPrep.all,
+        "detail",
+        interviewPrepId,
+      ] as const,
+  },
 
-  lists: () =>
-    [...queryKeys.applications.all, "list"] as const,
+  coverLetters: {
+    all: ["cover-letters"] as const,
 
-  list: (params: Record<string, unknown>) =>
-    [
-      ...queryKeys.applications.lists(),
-      params,
-    ] as const,
+    byResumeAndJob: (
+      resumeId: string,
+      jobPostId: string,
+    ) =>
+      [
+        ...queryKeys.coverLetters.all,
+        "resume",
+        resumeId,
+        "job",
+        jobPostId,
+      ] as const,
 
-  detail: (applicationId: string) =>
-    [
-      ...queryKeys.applications.all,
-      "detail",
-      applicationId,
-    ] as const,
-},
+    detail: (coverLetterId: string) =>
+      [
+        ...queryKeys.coverLetters.all,
+        "detail",
+        coverLetterId,
+      ] as const,
+  },
+
+  applications: {
+    all: ["applications"] as const,
+
+    lists: () =>
+      [...queryKeys.applications.all, "list"] as const,
+
+    list: (params: Record<string, unknown>) =>
+      [
+        ...queryKeys.applications.lists(),
+        params,
+      ] as const,
+
+    detail: (applicationId: string) =>
+      [
+        ...queryKeys.applications.all,
+        "detail",
+        applicationId,
+      ] as const,
+  },
 } as const;

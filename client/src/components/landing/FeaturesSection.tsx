@@ -61,7 +61,7 @@ const FeaturesSection = () => {
         </div>
 
         <div className="mt-16 grid gap-5 md:grid-cols-3">
-          {features.map((feature, index) => {
+          {features.map((feature) => {
             const Icon = feature.icon;
 
             return (
@@ -85,13 +85,6 @@ const FeaturesSection = () => {
                   hover:shadow-[0_24px_70px_rgba(0,0,0,0.28)]
                 "
               >
-                <div
-                  aria-hidden="true"
-                  className="absolute right-5 top-4 text-6xl font-semibold text-white/2.5"
-                >
-                  0{index + 1}
-                </div>
-
                 <div className="flex size-12 items-center justify-center rounded-2xl border border-primary/15 bg-primary/8 text-primary shadow-lg shadow-primary/5">
                   <Icon className="size-5" />
                 </div>
