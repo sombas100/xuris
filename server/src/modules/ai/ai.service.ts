@@ -16,7 +16,6 @@ import { buildCoverLetterPrompt } from "./prompts/cover-letter.prompt";
 
 import { buildInterviewPrepPrompt } from "./prompts/interview-prep.prompt";
 import type { InterviewPrepAIResponse, InterviewPrepResult, GenerateInterviewPrepParams } from "./ai.types";
-import { ps } from "zod/v4/locales";
 
 export const aiService = () => {
   async function analyzeResume(resumeText: string): Promise<ResumeAnalysisAIResponse> {
@@ -151,7 +150,7 @@ export const aiService = () => {
     const text = response.output_text;
 
     if (!text)
-      throw new InternalServerError('Ai did not return a response', 'AI_EMPTY_RESPONSE');
+      throw new InternalServerError('AI did not return a response', 'AI_EMPTY_RESPONSE');
 
     let parsed: InterviewPrepResult;
 

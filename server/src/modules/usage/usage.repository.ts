@@ -9,6 +9,23 @@ import type {
   RecordUsageData,
 } from "./usage.types";
 
+function isTransactionConflict(
+  error: unknown,
+): error is { code: string } {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    error.code === "P2034"
+  );
+}
+
+function wait(milliseconds: number) {
+  return new Promise<void>((resolve) => {
+    setTimeout(resolve, milliseconds);
+  });
+}
+
 export const usageRepository = () => {
   async function getUserUsageState(
     userId: string,
@@ -65,52 +82,73 @@ export const usageRepository = () => {
   async function reserveFreeUsage(
   userId: string,
 ) {
-  return prisma.$transaction(
-    async (transaction) => {
-      const user =
-        await transaction.user.findUnique({
-          where: {
-            id: userId,
-          },
+  const maximumAttempts = 5;
 
-          select: {
-            plan: true,
-            monthlyUsageCount: true,
-            monthlyUsageLimit: true,
-          },
-        });
+  for (
+    let attempt = 1;
+    attempt <= maximumAttempts;
+    attempt += 1
+  ) {
+    try {
+      return await prisma.$transaction(
+        async (transaction) => {
+          const user =
+            await transaction.user.findUnique({
+              where: {
+                id: userId,
+              },
 
-      if (
-        !user ||
-        user.plan !== Plan.FREE ||
-        user.monthlyUsageCount >=
-          user.monthlyUsageLimit
-      ) {
-        return false;
+              select: {
+                plan: true,
+                monthlyUsageCount: true,
+                monthlyUsageLimit: true,
+              },
+            });
+
+          if (
+            !user ||
+            user.plan !== Plan.FREE ||
+            user.monthlyUsageCount >=
+              user.monthlyUsageLimit
+          ) {
+            return false;
+          }
+
+          const updated =
+            await transaction.user.updateMany({
+              where: {
+                id: userId,
+                plan: Plan.FREE,
+                monthlyUsageCount:
+                  user.monthlyUsageCount,
+              },
+
+              data: {
+                monthlyUsageCount: {
+                  increment: 1,
+                },
+              },
+            });
+
+          return updated.count === 1;
+        },
+        {
+          isolationLevel: "Serializable",
+        },
+      );
+    } catch (error: unknown) {
+      const shouldRetry =
+        isTransactionConflict(error) &&
+        attempt < maximumAttempts;
+
+      if (!shouldRetry) {
+        throw error;
       }
+      await wait(attempt * 15);
+    }
+  }
 
-      const updated =
-        await transaction.user.updateMany({
-          where: {
-            id: userId,
-            plan: Plan.FREE,
-            monthlyUsageCount:
-              user.monthlyUsageCount,
-          },
-
-          data: {
-            monthlyUsageCount: {
-              increment: 1,
-            },
-          },
-        });
-
-      return updated.count === 1;
-    },
-    {
-      isolationLevel: "Serializable",
-    },
-  );
+  return false;
 }
 
   async function releaseFreeUsage(
