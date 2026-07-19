@@ -1,17 +1,12 @@
-import {
-  afterAll,
-  afterEach,
-  beforeAll,
-} from "vitest";
+import { afterAll, beforeAll } from "vitest";
 
 import { prisma } from "../lib/prisma";
+import { assertTestDatabase } from "./helpers/assert-test-database";
 
 beforeAll(async () => {
-  await prisma.$connect();
-});
+  assertTestDatabase();
 
-afterEach(() => {
-  
+  await prisma.$connect();
 });
 
 afterAll(async () => {
