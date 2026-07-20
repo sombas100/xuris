@@ -30,6 +30,7 @@ const db = database();
 
 app.set('trust proxy', 1);
 app.use(helmet());
+app.get("/health", healthCheck)
 app.post("/api/billing/v1/webhook",
   express.raw({ type: "application/json", }), stripeWebhookHandler);
 app.use(clerkMiddleware());
@@ -52,7 +53,6 @@ app.use("/api/billing/v1", billingRoutes);
 app.use('/api/usage/v1', usageRoute)
 
 
-app.get("/health", healthCheck)
 
 app.use(notFoundHandler);
 app.use(errorHandler);
