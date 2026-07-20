@@ -3,6 +3,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { ApiError } from "@/lib/api-error";
 import { apiClient } from "@/lib/api-client";
 
+const API_BASE_URL = "http://127.0.0.1:5001/api";
+
 describe("apiClient", () => {
   afterEach(() => {
     vi.restoreAllMocks();
@@ -33,7 +35,7 @@ describe("apiClient", () => {
     expect(getToken).toHaveBeenCalledOnce();
 
     expect(fetchMock).toHaveBeenCalledWith(
-      "http://localhost:3000/api/auth/v1/me",
+      `${API_BASE_URL}/auth/v1/me`,
       expect.objectContaining({
         method: "GET",
         headers: expect.objectContaining({
@@ -67,7 +69,7 @@ describe("apiClient", () => {
     });
 
     expect(fetchMock).toHaveBeenCalledWith(
-      "http://localhost:3000/api/applications/v1",
+      `${API_BASE_URL}/applications/v1`,
       expect.objectContaining({
         method: "POST",
         headers: expect.objectContaining({

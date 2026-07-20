@@ -43,6 +43,10 @@ export function useCreateCoverLetter() {
           queryKey:
             queryKeys.dashboard.summary(),
         }),
+
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.usage.summary(),
+    }),
       ]);
     },
   });

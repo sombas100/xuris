@@ -39,7 +39,12 @@ export function useCreateJobComparison() {
         queryClient.invalidateQueries({
           queryKey:
             queryKeys.dashboard.summary(),
+            
         }),
+
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.usage.summary(),
+    }),
       ]);
     },
   });
