@@ -1,5 +1,5 @@
-import { prisma } from "../../lib/prisma";
-import { AnalysisStatus, AnalysisType } from "../../../generated/prisma/enums";
+import { prisma } from "../../lib/prisma.js";
+import { AnalysisStatus, AnalysisType } from "../../generated/prisma/enums.js";
 
 type CreateResumeAnalysisData = {
   userId: string;

@@ -4,7 +4,7 @@ import {
   it,
 } from "vitest";
 
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma.js";
 
 describe("test database", () => {
   it("connects to the isolated test database", async () => {

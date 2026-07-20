@@ -1,6 +1,6 @@
 import express from 'express';
-import { analysisController } from './analysis.controller';
-import { requireUser } from '../../middleware/auth';
+import { analysisController } from './analysis.controller.js';
+import { requireUser } from '../../middleware/auth.js';
 
 const router = express.Router();
 const controller = analysisController();

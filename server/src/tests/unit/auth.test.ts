@@ -56,7 +56,7 @@ vi.mock(
   }),
 );
 
-import { requireUser } from "../../middleware/auth";
+import { requireUser } from "../../middleware/auth.js";
 
 describe("requireUser", () => {
   const clerkId = "clerk-user-1";

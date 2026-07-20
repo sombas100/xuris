@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { ApplicationStatus } from "../../../generated/prisma/enums";
+import { ApplicationStatus } from "../../generated/prisma/enums.js";
 
 const optionalDateSchema = z
   .string()

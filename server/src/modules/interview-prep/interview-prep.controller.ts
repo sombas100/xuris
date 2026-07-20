@@ -1,6 +1,6 @@
-import { asyncHandler } from "../../middleware/async-handler";
-import { successResponse } from "../../utils/api-response";
-import { interviewPrepService } from "./interview-prep.service";
+import { asyncHandler } from "../../middleware/async-handler.js";
+import { successResponse } from "../../utils/api-response.js";
+import { interviewPrepService } from "./interview-prep.service.js";
 
 const service = interviewPrepService();
 

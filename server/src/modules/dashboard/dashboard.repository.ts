@@ -1,9 +1,9 @@
 import {
   AnalysisStatus,
   AnalysisType,
-} from "../../../generated/prisma/enums";
+} from "../../generated/prisma/enums.js";
 
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma.js";
 
 const RECENT_ACTIVITY_FETCH_LIMIT = 6;
 

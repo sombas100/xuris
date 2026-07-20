@@ -1,9 +1,9 @@
-import { asyncHandler } from "../../middleware/async-handler";
-import { successResponse } from "../../utils/api-response";
+import { asyncHandler } from "../../middleware/async-handler.js";
+import { successResponse } from "../../utils/api-response.js";
 
 import {
   billingService as createBillingService,
-} from "./billing.service";
+} from "./billing.service.js";
 
 const service = createBillingService();
 

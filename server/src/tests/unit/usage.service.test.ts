@@ -6,9 +6,9 @@ import {
   vi,
 } from "vitest";
 
-import { Plan, UsageType } from "../../../generated/prisma/enums";
-import { NotFoundError } from "../../errors/NotFoundError";
-import { UsageLimitError } from "../../errors/UsageLimitError";
+import { Plan, UsageType } from "../../generated/prisma/enums.js";
+import { NotFoundError } from "../../errors/NotFoundError.js";
+import { UsageLimitError } from "../../errors/UsageLimitError.js";
 
 
 const repositoryMock = vi.hoisted(() => ({
@@ -28,7 +28,7 @@ vi.mock(
 
 import {
   usageService,
-} from "../../modules/usage/usage.service";
+} from "../../modules/usage/usage.service.js";
 
 const userId = "user_test_123";
 

@@ -1,7 +1,7 @@
 import express from "express";
 
-import { interviewPrepController } from "./interview-prep.controller";
-import { requireUser } from "../../middleware/auth";
+import { interviewPrepController } from "./interview-prep.controller.js";
+import { requireUser } from "../../middleware/auth.js";
 
 const router = express.Router();
 const controller = interviewPrepController();

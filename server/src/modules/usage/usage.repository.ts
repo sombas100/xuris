@@ -1,13 +1,13 @@
 import {
   Plan,
   type UsageType,
-} from "../../../generated/prisma/enums";
+} from "../../generated/prisma/enums.js";
 
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma.js";
 
 import type {
   RecordUsageData,
-} from "./usage.types";
+} from "./usage.types.js";
 
 function isTransactionConflict(
   error: unknown,

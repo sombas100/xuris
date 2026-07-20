@@ -1,12 +1,12 @@
 import type { Request, Response } from "express";
 import type Stripe from "stripe";
 
-import { env } from "../../config/env";
-import { stripe } from "../../lib/stripe";
+import { env } from "../../config/env.js";
+import { stripe } from "../../lib/stripe.js";
 
 import {
   stripeWebhookService as createStripeWebhookService,
-} from "./stripe-webhook.service";
+} from "./stripe-webhook.service.js";
 
 const webhookService = createStripeWebhookService();
 

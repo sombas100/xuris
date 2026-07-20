@@ -1,14 +1,14 @@
 import {
   asyncHandler,
-} from "../../middleware/async-handler";
+} from "../../middleware/async-handler.js";
 
 import {
   successResponse,
-} from "../../utils/api-response";
+} from "../../utils/api-response.js";
 
 import {
   usageService,
-} from "./usage.service";
+} from "./usage.service.js";
 
 const service = usageService();
 

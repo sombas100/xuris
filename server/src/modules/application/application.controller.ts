@@ -1,16 +1,16 @@
-import { asyncHandler } from "../../middleware/async-handler";
-import { successResponse } from "../../utils/api-response";
+import { asyncHandler } from "../../middleware/async-handler.js";
+import { successResponse } from "../../utils/api-response.js";
 
 import {
   applicationService as createApplicationService,
-} from "./application.service";
+} from "./application.service.js";
 
 import {
   applicationListQuerySchema,
   createApplicationSchema,
   updateApplicationSchema,
   updateApplicationStatusSchema,
-} from "./application.validation";
+} from "./application.validation.js";
 
 const service = createApplicationService();
 

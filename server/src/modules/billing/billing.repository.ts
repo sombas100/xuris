@@ -1,17 +1,17 @@
 import type {
   Prisma,
-} from "../../../generated/prisma/client";
+} from "../../generated/prisma/client.js";
 
 import {
   Plan,
   SubscriptionStatus,
-} from "../../../generated/prisma/enums";
+} from "../../generated/prisma/enums.js";
 
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma.js";
 
 import type {
   SyncSubscriptionData,
-} from "./billing.types";
+} from "./billing.types.js";
 
 type TransactionClient =
   Prisma.TransactionClient;

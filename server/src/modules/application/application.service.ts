@@ -1,19 +1,19 @@
-import { ApplicationStatus } from "../../../generated/prisma/enums";
+import { ApplicationStatus } from "../../generated/prisma/enums.js";
 
-import { BadRequestError } from "../../errors/BadRequestError";
-import { NotFoundError } from "../../errors/NotFoundError";
+import { BadRequestError } from "../../errors/BadRequestError.js";
+import { NotFoundError } from "../../errors/NotFoundError.js";
 
-import { coverLetterRepository } from "../cover-letter/cover-letter.repository";
-import { jobRepository } from "../job/job.repository";
-import { resumeRepository } from "../resume/resume.repository";
+import { coverLetterRepository } from "../cover-letter/cover-letter.repository.js";
+import { jobRepository } from "../job/job.repository.js";
+import { resumeRepository } from "../resume/resume.repository.js";
 
-import { applicationRepository } from "./application.repository";
+import { applicationRepository } from "./application.repository.js";
 import type {
   ApplicationListQuery,
   CreateApplicationInput,
   UpdateApplicationInput,
   UpdateApplicationStatusInput,
-} from "./application.validation";
+} from "./application.validation.js";
 
 const repository = applicationRepository();
 const resumeRepo = resumeRepository();

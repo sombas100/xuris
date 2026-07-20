@@ -1,11 +1,11 @@
 import type { Request, Response, NextFunction } from "express";
 import { ZodError, z } from "zod";
-import { Prisma } from '../../generated/prisma/client'
+import { Prisma } from '../generated/prisma/client.js'
 
-import { errorResponse } from "../utils/api-response";
-import { HttpError } from "../errors/HttpError";
-import { logger } from "../utils/logger";
-import { handlePrismaError } from "../errors/PrismaError";
+import { errorResponse } from "../utils/api-response.js";
+import { HttpError } from "../errors/HttpError.js";
+import { logger } from "../utils/logger.js";
+import { handlePrismaError } from "../errors/PrismaError.js";
 
 export function errorHandler(
   err: unknown,

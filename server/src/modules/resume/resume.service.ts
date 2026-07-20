@@ -1,9 +1,8 @@
-import { HttpError } from "../../errors/HttpError";
-import { s3Service } from "../aws/s3.service";
-import { resumeRepository } from "./resume.repository";
-import { extractResumeText } from "./resume-text.service";
-import { NotFoundError } from "../../errors/NotFoundError";
-import { InternalServerError } from "../../errors/InternalServerError";
+import { s3Service } from "../aws/s3.service.js";
+import { resumeRepository } from "./resume.repository.js";
+import { extractResumeText } from "./resume-text.service.js";
+import { NotFoundError } from "../../errors/NotFoundError.js";
+import { InternalServerError } from "../../errors/InternalServerError.js";
 
 const repository = resumeRepository();
 const storage = s3Service();

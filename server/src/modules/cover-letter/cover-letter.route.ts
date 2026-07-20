@@ -1,7 +1,7 @@
 import express from "express";
 
-import { coverLetterController } from "./cover-letter.controller";
-import { requireUser } from "../../middleware/auth";
+import { coverLetterController } from "./cover-letter.controller.js";
+import { requireUser } from "../../middleware/auth.js";
 
 const router = express.Router();
 const controller = coverLetterController();

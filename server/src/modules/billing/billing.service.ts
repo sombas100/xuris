@@ -3,21 +3,21 @@ import type Stripe from "stripe";
 import {
   Plan,
   SubscriptionStatus,
-} from "../../../generated/prisma/enums";
+} from "../../generated/prisma/enums.js";
 
-import { BadRequestError } from "../../errors/BadRequestError";
-import { NotFoundError } from "../../errors/NotFoundError";
+import { BadRequestError } from "../../errors/BadRequestError.js";
+import { NotFoundError } from "../../errors/NotFoundError.js";
 
-import { env } from "../../config/env";
-import { stripe } from "../../lib/stripe";
+import { env } from "../../config/env.js";
+import { stripe } from "../../lib/stripe.js";
 
-import { billingRepository } from "./billing.repository";
+import { billingRepository } from "./billing.repository.js";
 
 import type {
   BillingStatus,
   StripeSubscriptionWithPeriod,
   SyncSubscriptionData,
-} from "./billing.types";
+} from "./billing.types.js";
 
 const repository = billingRepository();
 

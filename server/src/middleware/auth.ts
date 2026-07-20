@@ -1,9 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
 import { getAuth, clerkClient } from "@clerk/express";
 
-import { UnauthorizedError } from "../errors/UnauthorizedError";
-import { authRepository } from "../modules/auth/auth.repository";
-import { asyncHandler } from "./async-handler";
+import { UnauthorizedError } from "../errors/UnauthorizedError.js";
+import { authRepository } from "../modules/auth/auth.repository.js";
+import { asyncHandler } from "./async-handler.js";
 
 const users = authRepository();
 

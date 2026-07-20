@@ -1,7 +1,7 @@
 import express from "express";
 
-import { requireUser } from "../../middleware/auth";
-import { applicationController } from "./application.controller";
+import { requireUser } from "../../middleware/auth.js";
+import { applicationController } from "./application.controller.js";
 
 const router = express.Router();
 const controller = applicationController();

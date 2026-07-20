@@ -1,7 +1,7 @@
-import { successResponse } from "../../utils/api-response";
-import { asyncHandler } from "../../middleware/async-handler";
+import { successResponse } from "../../utils/api-response.js";
+import { asyncHandler } from "../../middleware/async-handler.js";
 
-import { coverLetterService } from "./cover-letter.service";
+import { coverLetterService } from "./cover-letter.service.js";
 
 const service = coverLetterService();
 

@@ -1,6 +1,6 @@
-import { prisma } from "../../lib/prisma";
-import { InterviewDifficulty } from "../../../generated/prisma/enums";
-import type { InterviewQuestion } from "../ai/ai.types";
+import { prisma } from "../../lib/prisma.js";
+import { InterviewDifficulty } from "../../generated/prisma/enums.js";
+import type { InterviewQuestion } from "../ai/ai.types.js";
 
 type CreateInterviewPrepData = {
   userId: string;

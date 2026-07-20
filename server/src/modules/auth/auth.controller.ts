@@ -1,5 +1,5 @@
-import { asyncHandler } from "../../middleware/async-handler";
-import { successResponse } from "../../utils/api-response";
+import { asyncHandler } from "../../middleware/async-handler.js";
+import { successResponse } from "../../utils/api-response.js";
 
 export const authController = () => {
   const getCurrentUser = asyncHandler(async (req, res) => {

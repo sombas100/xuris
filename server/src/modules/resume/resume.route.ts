@@ -1,7 +1,7 @@
 import express from 'express';
-import { upload } from "../../middleware/upload";
-import { resumeController } from "./resume.controller";
-import { requireUser } from '../../middleware/auth';
+import { upload } from "../../middleware/upload.js";
+import { resumeController } from "./resume.controller.js";
+import { requireUser } from '../../middleware/auth.js';
 
 const controller = resumeController()
 const router = express.Router();

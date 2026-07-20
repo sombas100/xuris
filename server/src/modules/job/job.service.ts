@@ -1,7 +1,7 @@
-import { aiService } from "../ai/ai.service";
-import { jobRepository } from "./job.repository";
-import type { CreateJobPostFromTextInput } from "./job.validation";
-import { NotFoundError } from "../../errors/NotFoundError";
+import { aiService } from "../ai/ai.service.js";
+import { jobRepository } from "./job.repository.js";
+import type { CreateJobPostFromTextInput } from "./job.validation.js";
+import { NotFoundError } from "../../errors/NotFoundError.js";
 
 const repository = jobRepository();
 const ai = aiService();

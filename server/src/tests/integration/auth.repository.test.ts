@@ -24,7 +24,7 @@ vi.mock("../../lib/prisma", () => ({
   },
 }));
 
-import { authRepository } from "../../modules/auth/auth.repository";
+import { authRepository } from "../../modules/auth/auth.repository.js";
 
 describe("authRepository", () => {
   const repository = authRepository();

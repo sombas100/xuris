@@ -1,4 +1,4 @@
-import { Prisma } from "../../generated/prisma/client";
+import { Prisma } from "../generated/prisma/client.js";
 
 export function handlePrismaError(err: Prisma.PrismaClientKnownRequestError) {
   switch (err.code) {

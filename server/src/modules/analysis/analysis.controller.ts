@@ -1,6 +1,6 @@
-import { analysisService as createAnalysisService } from "./analysis.service";
-import { asyncHandler } from "../../middleware/async-handler";
-import { successResponse } from "../../utils/api-response";
+import { analysisService as createAnalysisService } from "./analysis.service.js";
+import { asyncHandler } from "../../middleware/async-handler.js";
+import { successResponse } from "../../utils/api-response.js";
 
 const analysisService = createAnalysisService();
 

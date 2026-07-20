@@ -1,6 +1,6 @@
 import type {
   UsageType,
-} from "../../../generated/prisma/enums";
+} from "../../generated/prisma/enums.js";
 
 export type UsageReservation = {
   userId: string;

@@ -1,13 +1,13 @@
-import { resumeRepository } from "../resume/resume.repository";
-import { analysisRepository } from "./analysis.repository";
-import { jobRepository } from "../job/job.repository";
-import { aiService } from "../ai/ai.service";
-import { usageService } from "../usage/usage.service";
+import { resumeRepository } from "../resume/resume.repository.js";
+import { analysisRepository } from "./analysis.repository.js";
+import { jobRepository } from "../job/job.repository.js";
+import { aiService } from "../ai/ai.service.js";
+import { usageService } from "../usage/usage.service.js";
 
-import { NotFoundError } from "../../errors/NotFoundError";
-import { BadRequestError } from "../../errors/BadRequestError";
+import { NotFoundError } from "../../errors/NotFoundError.js";
+import { BadRequestError } from "../../errors/BadRequestError.js";
 
-import { UsageType } from "../../../generated/prisma/enums";
+import { UsageType } from "../../generated/prisma/enums.js";
 
 const resumeRepo = resumeRepository();
 const analysisRepo = analysisRepository();

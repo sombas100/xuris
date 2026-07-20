@@ -1,21 +1,21 @@
-import { openai } from "../../lib/openai";
-import { env } from "../../config/env";
+import { openai } from "../../lib/openai.js";
+import { env } from "../../config/env.js";
 
-import { buildResumeAnalysisPrompt } from "./prompts/resume-analysis.prompt";
-import { buildJobExtractionPrompt } from "./prompts/job-extraction.prompt";
+import { buildResumeAnalysisPrompt } from "./prompts/resume-analysis.prompt.js";
+import { buildJobExtractionPrompt } from "./prompts/job-extraction.prompt.js";
 
-import type { CoverLetterAIResponse, CoverLetterParams, CoverLetterResult, JobExtractionResult, JobMatchParams } from "./ai.types";
-import type { ResumeAnalysisAIResponse, ResumeAnalysisResult } from "./ai.types";
+import type { CoverLetterAIResponse, CoverLetterParams, CoverLetterResult, JobExtractionResult, JobMatchParams } from "./ai.types.js";
+import type { ResumeAnalysisAIResponse, ResumeAnalysisResult } from "./ai.types.js";
 
-import { buildResumeJobMatchPrompt } from "./prompts/job-match.prompt";
-import type { ResumeJobMatchResult } from "./ai.types";
+import { buildResumeJobMatchPrompt } from "./prompts/job-match.prompt.js";
+import type { ResumeJobMatchResult } from "./ai.types.js";
 
-import type { ResumeJobMatchAIResponse } from "./ai.types";
-import { InternalServerError } from "../../errors/InternalServerError";
-import { buildCoverLetterPrompt } from "./prompts/cover-letter.prompt";
+import type { ResumeJobMatchAIResponse } from "./ai.types.js";
+import { InternalServerError } from "../../errors/InternalServerError.js";
+import { buildCoverLetterPrompt } from "./prompts/cover-letter.prompt.js";
 
-import { buildInterviewPrepPrompt } from "./prompts/interview-prep.prompt";
-import type { InterviewPrepAIResponse, InterviewPrepResult, GenerateInterviewPrepParams } from "./ai.types";
+import { buildInterviewPrepPrompt } from "./prompts/interview-prep.prompt.js";
+import type { InterviewPrepAIResponse, InterviewPrepResult, GenerateInterviewPrepParams } from "./ai.types.js";
 
 export const aiService = () => {
   async function analyzeResume(resumeText: string): Promise<ResumeAnalysisAIResponse> {

@@ -8,10 +8,10 @@ import {
 
 import type Stripe from "stripe";
 
-import { Plan, SubscriptionStatus } from "../../../generated/prisma/enums";
+import { Plan, SubscriptionStatus } from "../../generated/prisma/enums.js";
 
-import { BadRequestError } from "../../errors/BadRequestError";
-import { NotFoundError } from "../../errors/NotFoundError";
+import { BadRequestError } from "../../errors/BadRequestError.js";
+import { NotFoundError } from "../../errors/NotFoundError.js";
 
 const repositoryMock = vi.hoisted(() => ({
   getUserBillingState: vi.fn(),
@@ -73,7 +73,7 @@ vi.mock("../../config/env", () => ({
 
 import {
   billingService,
-} from "../../modules/billing/billing.service";
+} from "../../modules/billing/billing.service.js";
 
 const userId = "user_test_123";
 

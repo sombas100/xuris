@@ -1,10 +1,10 @@
 import express from "express";
 
-import { requireUser } from "../../middleware/auth";
+import { requireUser } from "../../middleware/auth.js";
 
 import {
   billingController,
-} from "./billing.controller";
+} from "./billing.controller.js";
 
 const router = express.Router();
 const controller = billingController();

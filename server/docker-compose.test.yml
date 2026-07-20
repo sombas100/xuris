@@ -1,5 +1,7 @@
+name: xuris-test
+
 services:
-  xuris-test-db:
+  postgres:
     image: postgres:17-alpine
     container_name: xuris-test-db
     restart: unless-stopped
@@ -24,3 +26,11 @@ services:
 
     tmpfs:
       - /var/lib/postgresql/data
+
+    networks:
+      - xuris-test-network
+
+networks:
+  xuris-test-network:
+    name: xuris-test-network
+    driver: bridge

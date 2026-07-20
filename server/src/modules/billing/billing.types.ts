@@ -3,7 +3,7 @@ import type Stripe from "stripe";
 import {
   Plan,
   SubscriptionStatus,
-} from "../../../generated/prisma/enums";
+} from "../../generated/prisma/enums.js";
 
 export type SyncSubscriptionData = {
   userId: string;

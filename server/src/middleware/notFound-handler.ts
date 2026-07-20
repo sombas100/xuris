@@ -1,5 +1,5 @@
 import type { RequestHandler } from "express";
-import { errorResponse } from "../utils/api-response";
+import { errorResponse } from "../utils/api-response.js";
 
 export const notFoundHandler: RequestHandler = (_req, res) => {
     return errorResponse(

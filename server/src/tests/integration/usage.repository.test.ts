@@ -9,12 +9,12 @@ import {
 import {
   Plan,
   UsageType,
-} from "../../../generated/prisma/enums";
+} from "../../generated/prisma/enums.js";
 
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma.js";
 import {
   usageRepository,
-} from "../../modules/usage/usage.repository";
+} from "../../modules/usage/usage.repository.js";
 
 const repository = usageRepository();
 

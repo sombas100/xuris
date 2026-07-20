@@ -1,7 +1,7 @@
-import { asyncHandler } from "../../middleware/async-handler";
-import { HttpError } from "../../errors/HttpError";
-import { successResponse } from "../../utils/api-response";
-import { resumeService as createResumeService } from "./resume.service";
+import { asyncHandler } from "../../middleware/async-handler.js";
+import { HttpError } from "../../errors/HttpError.js";
+import { successResponse } from "../../utils/api-response.js";
+import { resumeService as createResumeService } from "./resume.service.js";
 
 const resumeService = createResumeService();
 

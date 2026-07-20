@@ -1,7 +1,7 @@
 import express from "express";
 
-import { jobController } from "./job.controller";
-import { requireUser } from "../../middleware/auth";
+import { jobController } from "./job.controller.js";
+import { requireUser } from "../../middleware/auth.js";
 
 const router = express.Router();
 const controller = jobController();

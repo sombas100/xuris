@@ -1,10 +1,10 @@
-import { AnalysisType } from "../../../generated/prisma/enums";
+import { AnalysisType } from "../../generated/prisma/enums.js";
 
-import { dashboardRepository } from "./dashboard.repository";
+import { dashboardRepository } from "./dashboard.repository.js";
 import type {
   DashboardActivity,
   DashboardInsights,
-} from "./dashboard.types";
+} from "./dashboard.types.js";
 
 const repository = dashboardRepository();
 

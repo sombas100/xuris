@@ -49,7 +49,7 @@ vi.mock("./prompts/interview-prep.prompt", () => ({
     mocks.buildInterviewPrepPrompt,
 }));
 
-import { aiService } from "./ai.service";
+import { aiService } from "./ai.service.js";
 
 import type {
   CoverLetterParams,
@@ -60,7 +60,7 @@ import type {
   JobMatchParams,
   ResumeAnalysisResult,
   ResumeJobMatchResult,
-} from "./ai.types";
+} from "./ai.types.js";
 
 type MockAIResponseOptions = {
   outputText?: string;

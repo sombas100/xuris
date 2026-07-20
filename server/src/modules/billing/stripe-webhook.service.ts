@@ -1,11 +1,11 @@
 import type Stripe from "stripe";
 
-import { Prisma } from "../../../generated/prisma/client";
+import { Prisma } from "../../generated/prisma/client.js";
 
-import { billingRepository } from "./billing.repository";
+import { billingRepository } from "./billing.repository.js";
 import {
   billingService as createBillingService,
-} from "./billing.service";
+} from "./billing.service.js";
 
 const repository = billingRepository();
 const billing = createBillingService();

@@ -1,5 +1,5 @@
-import { prisma } from "../../lib/prisma";
-import { ResumeStatus } from "../../../generated/prisma/enums";
+import { prisma } from "../../lib/prisma.js";
+import { ResumeStatus } from "../../generated/prisma/enums.js";
 
 
 type CreateResumeData = {

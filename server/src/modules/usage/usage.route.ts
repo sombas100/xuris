@@ -2,11 +2,11 @@ import express from "express";
 
 import {
   requireUser,
-} from "../../middleware/auth";
+} from "../../middleware/auth.js";
 
 import {
   usageController,
-} from "./usage.controller";
+} from "./usage.controller.js";
 
 const router = express.Router();
 const controller = usageController();

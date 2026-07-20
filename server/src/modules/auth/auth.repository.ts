@@ -1,5 +1,5 @@
-import { prisma } from "../../lib/prisma";
-import { UpdateUserData } from "./auth.types";
+import { prisma } from "../../lib/prisma.js";
+import { UpdateUserData } from "./auth.types.js";
 
 type CreateUserData = {
   clerkId: string;

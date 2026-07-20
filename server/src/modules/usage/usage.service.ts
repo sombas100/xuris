@@ -1,18 +1,18 @@
 import {
   Plan,
-} from "../../../generated/prisma/enums";
+} from "../../generated/prisma/enums.js";
 
-import { NotFoundError } from "../../errors/NotFoundError";
-import { UsageLimitError } from "../../errors/UsageLimitError";
+import { NotFoundError } from "../../errors/NotFoundError.js";
+import { UsageLimitError } from "../../errors/UsageLimitError.js";
 
 import {
   usageRepository,
-} from "./usage.repository";
+} from "./usage.repository.js";
 
 import type {
   RecordUsageData,
   UsageReservation,
-} from "./usage.types";
+} from "./usage.types.js";
 
 const repository = usageRepository();
 

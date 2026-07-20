@@ -1,9 +1,9 @@
 import type {
   ApplicationStatus,
   Prisma,
-} from "../../../generated/prisma/client";
+} from "../../generated/prisma/client.js";
 
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma.js";
 
 type CreateApplicationData = {
   userId: string;

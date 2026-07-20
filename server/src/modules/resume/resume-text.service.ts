@@ -1,6 +1,6 @@
 import { PDFParse } from "pdf-parse";
 import mammoth from "mammoth";
-import { HttpError } from "../../errors/HttpError";
+import { HttpError } from "../../errors/HttpError.js";
 
 function cleanExtractedText(text: string) {
   return text
