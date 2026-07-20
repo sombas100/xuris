@@ -34,8 +34,6 @@ const DashboardShowcase = () => {
           "
         />
 
-        {/* Right */}
-
         <img
           src={comparison}
           alt=""
