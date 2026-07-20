@@ -8,15 +8,11 @@ const DashboardShowcase = () => {
       id="dashboard-showcase"
       className="relative mt-24 flex items-center justify-center overflow-hidden"
     >
-      {/* Background glow */}
-
       <div className="absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-1/2 h-125 w-125 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-[180px]" />
       </div>
 
       <div className="relative h-162.5 w-full max-w-7xl">
-        {/* Left */}
-
         <img
           src={analysis}
           alt=""
