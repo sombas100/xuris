@@ -8,7 +8,7 @@ import { env } from './config/env.js';
 import { database } from './config/db.js';
 import type { Server } from 'node:http';
 import healthCheck from './routes/health-route.js';
-// import { setRateLimit } from './utils/rate-limit.js';
+import { setRateLimit } from './utils/rate-limit.js';
 import { errorHandler } from './middleware/error-handler.js';
 import { notFoundHandler } from './middleware/notFound-handler.js';
 
@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(morgan(env.NODE_ENV === "production" ? "combined" : "dev"));
 
-// app.use('/api', setRateLimit)
+app.use('/api', setRateLimit)
 app.use('/api/resumes/v1', resumeRoutes);
 app.use('/api/analysis/v1', analysisRoutes);
 app.use('/api/jobs/v1', jobRoutes);
