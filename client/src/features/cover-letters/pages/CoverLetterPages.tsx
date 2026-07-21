@@ -19,8 +19,10 @@ import { CoverLetterResult } from "../components/CoverLetterResult";
 import { RunCoverLetterButton } from "../components/RunCoverLetterButton";
 import { useCoverLetters } from "../hooks/use-cover-letters";
 import { useCreateCoverLetter } from "../hooks/use-create-cover-letter";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function CoverLettersPage() {
+  useDocumentTitle("Cover letters");
   const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedResumeId = searchParams.get("resumeId") ?? "";

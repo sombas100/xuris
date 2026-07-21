@@ -14,6 +14,7 @@ import { useUpdateApplicationStatus } from "../hooks/use-update-application-stat
 import { ApplicationEditForm } from "../components/ApplicationEditForm";
 import type { ApplicationStatus } from "../application.types";
 import { useState } from "react";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function ApplicationDetailsPage() {
   const [editing, setEditing] = useState(false);
@@ -29,6 +30,7 @@ export function ApplicationDetailsPage() {
     isError,
     error,
   } = useApplication(applicationId);
+  useDocumentTitle(application?.company ?? "Application");
 
   const statusMutation = useUpdateApplicationStatus(applicationId ?? "");
 

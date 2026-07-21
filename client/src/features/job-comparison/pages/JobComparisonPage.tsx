@@ -19,8 +19,10 @@ import { JobComparisonResults } from "../components/JobComparisonResults";
 import { RunJobComparisonButton } from "../components/RunJobComparisonButton";
 import { useCreateJobComparison } from "../hooks/use-create-job-comparison";
 import { useJobComparisons } from "../hooks/use-job-comparisons";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function JobComparisonPage() {
+  useDocumentTitle("Job Match");
   const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedResumeId = searchParams.get("resumeId") ?? "";

@@ -19,8 +19,10 @@ import { InterviewPrepResults } from "../components/InterviewPrepResults";
 import { RunInterviewPrepButton } from "../components/RunInterviewPrepButton";
 import { useCreateInterviewPrep } from "../hooks/use-create-interview-preps";
 import { useInterviewPreps } from "../hooks/use-interview-preps";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function InterviewPrepPage() {
+  useDocumentTitle("Interview Preparation");
   const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedResumeId = searchParams.get("resumeId") ?? "";

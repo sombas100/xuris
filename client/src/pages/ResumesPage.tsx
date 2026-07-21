@@ -3,8 +3,10 @@ import { ResumeCard } from "../features/resumes/components/ResumeCard";
 import { ResumeEmptyState } from "../features/resumes/components/ResumeEmptyState";
 import { ResumeUploadForm } from "../features/resumes/components/ResumeUploadForm";
 import { useResumes } from "../features/resumes/hooks/use-resumes";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function ResumesPage() {
+  useDocumentTitle("Resumes");
   const {
     data: resumes,
     isPending,

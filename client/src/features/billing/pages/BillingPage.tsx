@@ -19,6 +19,7 @@ import { useCheckoutSuccess } from "../hooks/use-checkout-success";
 import { useCreateCheckout } from "../hooks/use-create-checkout";
 import { useCreatePortal } from "../hooks/use-create-portal";
 import { useUsageSummary } from "../hooks/use-usage-summary";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 function formatDate(date: string | null | undefined) {
   if (!date) {
@@ -48,6 +49,7 @@ function formatStatus(status: string | undefined) {
 }
 
 export function BillingPage() {
+  useDocumentTitle("Billing");
   const billingQuery = useBillingStatus();
   const usageQuery = useUsageSummary();
 

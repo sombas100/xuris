@@ -5,8 +5,10 @@ import DashboardRecentActivity from "../features/dashboard/DashboardRecentActivi
 import DashboardStatCard from "@/components/dashboard/DashboardStatCard";
 
 import { useDashboardSummary } from "@/features/dashboard/hooks/use-dashboard-summary";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function DashboardPage() {
+  useDocumentTitle("Dashboard");
   const { data: summary, isPending, isError, error } = useDashboardSummary();
 
   return (

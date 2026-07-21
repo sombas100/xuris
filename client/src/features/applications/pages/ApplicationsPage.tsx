@@ -10,10 +10,12 @@ import { ApplicationCreateForm } from "../components/ApplicationCreateForm";
 import { ApplicationKanbanBoard } from "../components/ApplicationKanbanBoard";
 import { useApplications } from "../hooks/use-applications";
 import type { ApplicationStatus } from "../application.types";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 type ApplicationView = "list" | "board";
 
 export function ApplicationsPage() {
+  useDocumentTitle("Applications");
   const [showCreateForm, setShowCreateForm] = useState(false);
 
   const [view, setView] = useState<ApplicationView>("list");

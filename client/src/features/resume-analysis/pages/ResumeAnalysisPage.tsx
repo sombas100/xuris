@@ -13,8 +13,10 @@ import { ResumeSelector } from "../components/ResumeSelector";
 import { RunAnalysisButton } from "../components/RunAnalysisButton";
 import { useCreateResumeAnalysis } from "../hooks/use-create-resume-analysis";
 import { useResumeAnalyses } from "../hooks/use-resume-analysis";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function ResumeAnalysisPage() {
+  useDocumentTitle("Resume Analysis");
   const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedResumeId = searchParams.get("resumeId") ?? "";

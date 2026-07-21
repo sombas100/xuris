@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { ResumeStatusBadge } from "../components/ResumeStatusBadge";
 import { useDeleteResume } from "../hooks/use-delete-resume";
 import { useResume } from "../hooks/use-resume";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 function formatFileSize(bytes: number | null) {
   if (bytes === null) {
@@ -75,6 +76,7 @@ export function ResumeDetailsPage() {
     error,
     refetch,
   } = useResume(resumeId);
+  useDocumentTitle(resume?.title ?? "Resume");
 
   const deleteMutation = useDeleteResume();
 
