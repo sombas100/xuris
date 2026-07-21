@@ -4,7 +4,6 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { PublicPageHeader } from "@/components/public/PublicPageHeader";
-import { PublicPageLayout } from "@/layouts/PublicPageLayout";
 
 export function ContactPage() {
   const [name, setName] = useState("");

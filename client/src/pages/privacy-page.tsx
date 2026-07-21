@@ -1,5 +1,4 @@
 import { PublicPageHeader } from "@/components/public/PublicPageHeader";
-import { PublicPageLayout } from "@/layouts/PublicPageLayout";
 
 export function PrivacyPage() {
   return (
