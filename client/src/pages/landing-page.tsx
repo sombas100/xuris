@@ -8,26 +8,23 @@ import PricingSection from "@/components/landing/PricingSection";
 
 export function LandingPage() {
   return (
-    <main className=" min-h-screen p-2 bg-background max-w-full w-full">
+    <main className="min-h-screen bg-background">
       <Navbar />
 
-      <section className="flex flex-col items-center justify-center text-white mt-30 max-w-4xl mx-auto w-full">
-        <span className="flex items-center border-white justify-center bg-white/17 rounded-full px-2">
-          <h1 className="text-white p-1 font-medium text-sm">
+      <section className="mx-auto mt-30 flex w-full max-w-4xl flex-col items-center justify-center px-4 text-white sm:px-6 lg:px-8">
+        <span className="flex items-center justify-center rounded-full border-white bg-white/17 px-2">
+          <h1 className="p-1 text-sm font-medium text-white">
             AI-powered career growth
           </h1>
         </span>
 
         <Hero />
       </section>
+
       <DashboardShowcase />
-
       <FeaturesSection />
-
       <HowItWorksSection />
-
       <PricingSection />
-
       <Footer />
     </main>
   );
