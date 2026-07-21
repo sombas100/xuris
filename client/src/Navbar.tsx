@@ -23,14 +23,14 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="relative z-50 mx-auto h-20 w-full max-w-7xl px-4 text-white sm:px-6 lg:px-8">
-      <div className="flex h-full items-center justify-between">
+    <nav className="relative z-50 mx-auto w-full max-w-7xl px-4 text-white sm:px-6 lg:px-8">
+      <div className="flex h-20 items-center justify-between">
         <Link
           to="/"
           className="flex shrink-0 items-center"
           onClick={closeMobileMenu}
         >
-          <img className="size-10 object-contain" src={logo} alt="Xuris" />
+          <img className="size-10 mt-2 object-contain" src={logo} alt="Xuris" />
 
           <span className="text-xl font-semibold tracking-wide sm:text-3xl">
             Xuris

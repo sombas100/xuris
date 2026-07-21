@@ -22,6 +22,7 @@ import { PrivacyPage } from "@/pages/privacy-page";
 import { TermsPage } from "@/pages/terms-page";
 import { BillingPage } from "@/features/billing/pages/BillingPage";
 import { CheckoutCancelledPage } from "@/features/billing/pages/CheckoutCancelledPage";
+import { PublicPageLayout } from "@/layouts/PublicPageLayout";
 
 const AppRoutes = () => {
   return (
@@ -29,13 +30,15 @@ const AppRoutes = () => {
       <Route path="/" element={<LandingPage />} />
       <Route path="/sign-in/*" element={<SignInPage />} />
       <Route path="/sign-up/*" element={<SignUpPage />} />
-      <Route path="/pricing" element={<PricingPage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/faq" element={<FAQPage />} />
 
-      <Route path="/privacy" element={<PrivacyPage />} />
-      <Route path="/terms" element={<TermsPage />} />
-      <Route path="/contact" element={<ContactPage />} />
+      <Route element={<PublicPageLayout />}>
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/faq" element={<FAQPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+      </Route>
 
       <Route
         path="/dashboard"
