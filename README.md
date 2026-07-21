@@ -242,10 +242,12 @@ https://xuris.io
 Software Engineer
 
 GitHub:
-https://github.com/<username>
+https://github.com/sombas100
 
 LinkedIn:
-https://linkedin.com/in/<username>
+https://linkedin.com/in/corey-clarke100
+
+
 
 ---
 
