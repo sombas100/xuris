@@ -22,7 +22,6 @@ import { PrivacyPage } from "@/pages/privacy-page";
 import { TermsPage } from "@/pages/terms-page";
 import { BillingPage } from "@/features/billing/pages/BillingPage";
 import { CheckoutCancelledPage } from "@/features/billing/pages/CheckoutCancelledPage";
-import { PublicPageLayout } from "@/layouts/PublicPageLayout";
 
 const AppRoutes = () => {
   return (
@@ -31,14 +30,12 @@ const AppRoutes = () => {
       <Route path="/sign-in/*" element={<SignInPage />} />
       <Route path="/sign-up/*" element={<SignUpPage />} />
 
-      <Route element={<PublicPageLayout />}>
-        <Route path="/pricing" element={<PricingPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/faq" element={<FAQPage />} />
-        <Route path="/privacy" element={<PrivacyPage />} />
-        <Route path="/terms" element={<TermsPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-      </Route>
+      <Route path="/pricing" element={<PricingPage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/faq" element={<FAQPage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/contact" element={<ContactPage />} />
 
       <Route
         path="/dashboard"
@@ -50,6 +47,7 @@ const AppRoutes = () => {
       >
         <Route index element={<DashboardPage />} />
 
+        {/* Upcoming feature routes */}
         <Route path="resumes" element={<ResumesPage />} />
         <Route path="resumes/:resumeId" element={<ResumeDetailsPage />} />
         <Route path="resume-analysis" element={<ResumeAnalysisPage />} />

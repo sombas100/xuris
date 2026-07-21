@@ -1,11 +1,15 @@
-import { Outlet } from "react-router-dom";
+import type { ReactNode } from "react";
 
 import Footer from "@/Footer";
 import Navbar from "@/Navbar";
 
-export function PublicPageLayout() {
+type PublicPageLayoutProps = {
+  children: ReactNode;
+};
+
+export function PublicPageLayout({ children }: PublicPageLayoutProps) {
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden bg-background text-white">
+    <main className="relative min-h-screen w-full overflow-x-hidden bg-background text-white">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -17,15 +21,11 @@ export function PublicPageLayout() {
         <div className="absolute bottom-0 left-1/3 size-96 rounded-full bg-white/3 blur-[150px]" />
       </div>
 
-      <header className="h-20">
-        <Navbar />
-      </header>
+      <Navbar />
 
-      <main className="px-4 sm:px-6 lg:px-8">
-        <Outlet />
-      </main>
+      <div className="px-4 sm:px-6 lg:px-8">{children}</div>
 
       <Footer />
-    </div>
+    </main>
   );
 }
