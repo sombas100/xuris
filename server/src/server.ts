@@ -28,31 +28,63 @@ import usageRoute from './modules/usage/usage.route.js';
 const app = express();
 const db = database();
 
-app.set('trust proxy', 1);
+app.set("trust proxy", 1);
+
 app.use(helmet());
-app.get("/health", healthCheck)
-app.post("/api/billing/v1/webhook",
-  express.raw({ type: "application/json", }), stripeWebhookHandler);
+
+app.get("/health", healthCheck);
+
+app.post(
+  "/api/billing/v1/webhook",
+  express.raw({ type: "application/json" }),
+  stripeWebhookHandler,
+);
+
 app.use(clerkMiddleware());
-app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
-app.use(express.json({ limit: '1mb' }));
+
+const allowedOrigins = [
+  env.CLIENT_URL,
+  "https://www.xuris.io",
+  ...(env.NODE_ENV !== "production"
+    ? ["http://localhost:5173"]
+    : []),
+];
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error(`Origin ${origin} is not allowed by CORS`));
+    },
+    credentials: true,
+  }),
+);
+
+app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(morgan(env.NODE_ENV === "production" ? "combined" : "dev"));
 
-app.use('/api', setRateLimit)
-app.use('/api/resumes/v1', resumeRoutes);
-app.use('/api/analysis/v1', analysisRoutes);
-app.use('/api/jobs/v1', jobRoutes);
-app.use('/api/cover-letters/v1', coverLetterRoutes);
-app.use('/api/interview-prep/v1', interviewPrepRoutes);
-app.use('/api/auth/v1', authRoutes);
-app.use('/api/dashboard/v1', dashboardRoutes);
-app.use('/api/applications/v1', applicationRoutes)
+app.use("/api", setRateLimit);
+app.use("/api/resumes/v1", resumeRoutes);
+app.use("/api/analysis/v1", analysisRoutes);
+app.use("/api/jobs/v1", jobRoutes);
+app.use("/api/cover-letters/v1", coverLetterRoutes);
+app.use("/api/interview-prep/v1", interviewPrepRoutes);
+app.use("/api/auth/v1", authRoutes);
+app.use("/api/dashboard/v1", dashboardRoutes);
+app.use("/api/applications/v1", applicationRoutes);
 app.use("/api/billing/v1", billingRoutes);
-app.use('/api/usage/v1', usageRoute)
-
-
+app.use("/api/usage/v1", usageRoute);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
