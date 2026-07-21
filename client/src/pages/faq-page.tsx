@@ -4,6 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { PublicPageHeader } from "@/components/public/PublicPageHeader";
 
 import { cn } from "@/lib/utils";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 const faqs = [
   {
@@ -48,6 +49,7 @@ const faqs = [
 ];
 
 export function FAQPage() {
+  useDocumentTitle("FAQ");
   const [openQuestion, setOpenQuestion] = useState<number | null>(0);
 
   return (

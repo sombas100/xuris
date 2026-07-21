@@ -1,6 +1,7 @@
 import { BrainCircuit, BriefcaseBusiness, Heart, MapPin } from "lucide-react";
 
 import { PublicPageHeader } from "@/components/public/PublicPageHeader";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 const values = [
   {
@@ -24,6 +25,7 @@ const values = [
 ];
 
 export function AboutPage() {
+  useDocumentTitle("About");
   return (
     <div className="mx-auto w-full max-w-7xl">
       <PublicPageHeader

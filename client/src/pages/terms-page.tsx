@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
 
 import { PublicPageHeader } from "@/components/public/PublicPageHeader";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function TermsPage() {
+  useDocumentTitle("Terms & service");
   return (
     <div className="mx-auto w-full max-w-4xl pb-24">
       <PublicPageHeader

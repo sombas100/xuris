@@ -4,8 +4,10 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { PublicPageHeader } from "@/components/public/PublicPageHeader";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function ContactPage() {
+  useDocumentTitle("Contact");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");

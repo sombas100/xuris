@@ -1,6 +1,8 @@
 import { PublicPageHeader } from "@/components/public/PublicPageHeader";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function PrivacyPage() {
+  useDocumentTitle("Privacy");
   return (
     <div className="mx-auto w-full max-w-4xl pb-24">
       <PublicPageHeader
