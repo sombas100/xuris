@@ -133,7 +133,7 @@ server/
 ### Clone
 
 ```bash
-git clone https://github.com/<username>/xuris.git
+git clone https://github.com/sombas100/xuris.git
 ```
 
 ### Install
