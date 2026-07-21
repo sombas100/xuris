@@ -1,6 +1,5 @@
 import Hero from "@/components/landing/Hero";
 
-import Footer from "@/Footer";
 import DashboardShowcase from "@/components/dashboard/DashboardShowcase";
 import FeaturesSection from "@/components/landing/FeaturesSection";
 import HowItWorksSection from "@/components/landing/HowItWorksSection";

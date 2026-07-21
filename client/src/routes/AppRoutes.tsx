@@ -50,7 +50,6 @@ const AppRoutes = () => {
       >
         <Route index element={<DashboardPage />} />
 
-        {/* Upcoming feature routes */}
         <Route path="resumes" element={<ResumesPage />} />
         <Route path="resumes/:resumeId" element={<ResumeDetailsPage />} />
         <Route path="resume-analysis" element={<ResumeAnalysisPage />} />
