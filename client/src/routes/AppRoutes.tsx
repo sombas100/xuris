@@ -23,19 +23,23 @@ import { TermsPage } from "@/pages/terms-page";
 import { BillingPage } from "@/features/billing/pages/BillingPage";
 import { CheckoutCancelledPage } from "@/features/billing/pages/CheckoutCancelledPage";
 
+import { PublicPageLayout } from "@/layouts/PublicPageLayout";
+
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route element={<PublicPageLayout />}>
+        <Route index element={<LandingPage />} />
+        <Route path="pricing" element={<PricingPage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="faq" element={<FAQPage />} />
+        <Route path="privacy" element={<PrivacyPage />} />
+        <Route path="terms" element={<TermsPage />} />
+        <Route path="contact" element={<ContactPage />} />
+      </Route>
+
       <Route path="/sign-in/*" element={<SignInPage />} />
       <Route path="/sign-up/*" element={<SignUpPage />} />
-
-      <Route path="/pricing" element={<PricingPage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/faq" element={<FAQPage />} />
-      <Route path="/privacy" element={<PrivacyPage />} />
-      <Route path="/terms" element={<TermsPage />} />
-      <Route path="/contact" element={<ContactPage />} />
 
       <Route
         path="/dashboard"
@@ -46,8 +50,6 @@ const AppRoutes = () => {
         }
       >
         <Route index element={<DashboardPage />} />
-
-        {/* Upcoming feature routes */}
         <Route path="resumes" element={<ResumesPage />} />
         <Route path="resumes/:resumeId" element={<ResumeDetailsPage />} />
         <Route path="resume-analysis" element={<ResumeAnalysisPage />} />
@@ -55,12 +57,12 @@ const AppRoutes = () => {
         <Route path="interview-prep" element={<InterviewPrepPage />} />
         <Route path="cover-letters" element={<CoverLettersPage />} />
         <Route path="applications" element={<ApplicationsPage />} />
-        <Route path="billing" element={<BillingPage />} />
-        <Route path="billing/cancelled" element={<CheckoutCancelledPage />} />
         <Route
           path="applications/:applicationId"
           element={<ApplicationDetailsPage />}
         />
+        <Route path="billing" element={<BillingPage />} />
+        <Route path="billing/cancelled" element={<CheckoutCancelledPage />} />
       </Route>
     </Routes>
   );

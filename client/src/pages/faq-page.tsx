@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 import { PublicPageHeader } from "@/components/public/PublicPageHeader";
-import { PublicPageLayout } from "@/layouts/PublicPageLayout";
+
 import { cn } from "@/lib/utils";
 
 const faqs = [
@@ -51,51 +51,49 @@ export function FAQPage() {
   const [openQuestion, setOpenQuestion] = useState<number | null>(0);
 
   return (
-    <PublicPageLayout>
-      <div className="mx-auto w-full max-w-4xl pb-24">
-        <PublicPageHeader
-          eyebrow="Frequently asked questions"
-          title="Everything you need to know about Xuris."
-          description="Find answers about plans, usage, supported files and how Xuris fits into your job search."
-        />
+    <div className="mx-auto w-full max-w-4xl pb-24">
+      <PublicPageHeader
+        eyebrow="Frequently asked questions"
+        title="Everything you need to know about Xuris."
+        description="Find answers about plans, usage, supported files and how Xuris fits into your job search."
+      />
 
-        <section className="space-y-3">
-          {faqs.map((faq, index) => {
-            const open = openQuestion === index;
+      <section className="space-y-3">
+        {faqs.map((faq, index) => {
+          const open = openQuestion === index;
 
-            return (
-              <article
-                key={faq.question}
-                className="overflow-hidden rounded-3xl border border-white/10 bg-white/2.5 backdrop-blur-xl"
+          return (
+            <article
+              key={faq.question}
+              className="overflow-hidden rounded-3xl border border-white/10 bg-white/2.5 backdrop-blur-xl"
+            >
+              <button
+                type="button"
+                aria-expanded={open}
+                onClick={() => setOpenQuestion(open ? null : index)}
+                className="flex w-full items-center justify-between gap-6 p-6 text-left"
               >
-                <button
-                  type="button"
-                  aria-expanded={open}
-                  onClick={() => setOpenQuestion(open ? null : index)}
-                  className="flex w-full items-center justify-between gap-6 p-6 text-left"
-                >
-                  <span className="font-medium text-white">{faq.question}</span>
+                <span className="font-medium text-white">{faq.question}</span>
 
-                  <ChevronDown
-                    className={cn(
-                      "size-5 shrink-0 text-white/40 transition-transform",
-                      open && "rotate-180 text-primary",
-                    )}
-                  />
-                </button>
+                <ChevronDown
+                  className={cn(
+                    "size-5 shrink-0 text-white/40 transition-transform",
+                    open && "rotate-180 text-primary",
+                  )}
+                />
+              </button>
 
-                {open && (
-                  <div className="border-t border-white/10 px-6 pb-6 pt-5">
-                    <p className="text-sm leading-7 text-white/55">
-                      {faq.answer}
-                    </p>
-                  </div>
-                )}
-              </article>
-            );
-          })}
-        </section>
-      </div>
-    </PublicPageLayout>
+              {open && (
+                <div className="border-t border-white/10 px-6 pb-6 pt-5">
+                  <p className="text-sm leading-7 text-white/55">
+                    {faq.answer}
+                  </p>
+                </div>
+              )}
+            </article>
+          );
+        })}
+      </section>
+    </div>
   );
 }

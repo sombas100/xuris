@@ -1,7 +1,14 @@
 import { Button } from "@base-ui/react/button";
 import { IoArrowDownOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
+  const scrollToShowcase = () => {
+    document.getElementById("features")?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  };
   return (
     <div className="relative p-6 h-full">
       <div className="pointer-events-none absolute -top-240 -left-20 h-300 w-300 rounded-full bg-primary opacity-20 blur-[200px]" />
@@ -27,18 +34,32 @@ const Hero = () => {
             skill gaps, improves ATS performance, and helps you prepare for
             interviews with AI-powered insights.
           </p>
-          <div className="mt-12 flex flex-col items-center gap-4 text-sm font-medium">
+          <div className="mt-12 flex flex-col items-center">
+            <Link to="/sign-up">
+              <Button
+                className="relative overflow-visible cursor-pointer rounded-2xl border
+      border-gray-700 px-6 py-3 text-base font-semibold text-text shadow-md
+      transition-all duration-300 ease-out
+      hover:border-primary/40 hover:text-white
+      hover:shadow-[0_0_24px_rgba(204,93,232,0.45)]
+      after:absolute after:-bottom-px after:left-1/2 after:w-1/2
+      after:-translate-x-1/2 after:rounded-full
+      after:bg-primary/70 after:shadow-[0_0_10px_rgba(204,93,232,0.8)]
+      after:transition-all after:duration-300
+      hover:after:w-3/4 hover:after:shadow-[0_0_18px_rgba(204,93,232,1)]"
+              >
+                Get Started
+              </Button>
+            </Link>
+
+            <p className="mt-4 text-sm text-text/55">
+              Free plan available • No credit card required
+            </p>
+
             <Button
-              className="relative overflow-visible rounded-2xl border
-      border-gray-700 px-4 py-2 text-text shadow-md transition-all duration-300
-      ease-out cursor-pointer hover:border-primary/40 hover:text-white hover:shadow-[0_0_24px_rgba(204,93,232,0.45)]
-      after:absolute after:-bottom-px after:left-1/2 after:h:px after:w-1/2
-      after:-translate-x-1/2 after:rounded-full after:bg-primary/70 after:shadow-[0_0_10px_rgba(204,93,232,0.8)]
-      after:transition-all after:duration-300 hover:after:w-3/4 hover:after:shadow-[0_0_18px_rgba(204,93,232,1)]"
+              onClick={scrollToShowcase}
+              className="group mt-10 flex cursor-pointer flex-col items-center justify-center text-text transition-colors hover:text-white"
             >
-              Request access
-            </Button>
-            <Button className="group mt-10 flex flex-col items-center justify-center cursor-pointer text-text transition-colors hover:text-white">
               Learn more
               <IoArrowDownOutline
                 size={20}
